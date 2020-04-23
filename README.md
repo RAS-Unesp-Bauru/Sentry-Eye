@@ -36,15 +36,14 @@ X,Y,Z.
 
 ## Conclusion
 **Conluido**
-feito
 
 ## Infos
 This project is part of RAS's branches, specifically, a Bauru RAS's project with the intend to help the reasearch area with new ideias and, consequently, develop it's members ability to work with modern robotic and automation problems.
 
 ## Contact
-Facebook:legal
-Instagram:legal
-Email:rasunespbauru@unesp.br
+Facebook:
+Instagram:
+Email:
 
 
 
