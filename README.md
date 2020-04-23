@@ -35,7 +35,7 @@ X,Y,Z.
 3. Three
 
 ## Conclusion
-**Conluido**
+**Conluido**sim
 
 ## Infos
 This project is part of RAS's branches, specifically, a Bauru RAS's project with the intend to help the reasearch area with new ideias and, consequently, develop it's members ability to work with modern robotic and automation problems.
@@ -43,7 +43,7 @@ This project is part of RAS's branches, specifically, a Bauru RAS's project with
 ## Contact
 Facebook:
 Instagram:
-Email:
+Email:saas
 
 
 
