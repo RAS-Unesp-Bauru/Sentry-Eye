@@ -6,7 +6,7 @@ import cv2
 
 #Lê a imagem em binário para garantir que as shape 0 e shape 1 sejam height e width
 video = cv2.VideoCapture(0)
-ret, cap = video
+ret, cap = video.read()
 
 dimensions = cap.shape
 
