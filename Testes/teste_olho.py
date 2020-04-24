@@ -1,10 +1,10 @@
+import cv2
 ###Código atualmente pega apenas UM ponto, assim demonstrando apenas o esqueleto
 ###da ideia. O ideal seria achar o centro da imagem e a partir dai refletir nos
 ###2 quadrantes opostos para formar o retângulo com centro no meio.
 
 
 #Lê a imagem em binário para garantir que as shape 0 e shape 1 sejam height e width
-import cv2
 video = cv2.VideoCapture(0)
 ret, cap = video
 
