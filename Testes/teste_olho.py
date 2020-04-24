@@ -50,7 +50,7 @@ for i in range(numero_de_retangulos+1):
 print(lista_retangulos)
 
 while(True):
-    ret, cap = cap.read()
+    ret, cap = video.read()
     cv2.imshow('imagenzinha', cap)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         print("Forcefully Closed")
