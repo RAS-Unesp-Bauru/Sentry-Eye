@@ -4,6 +4,7 @@
 
 
 #Lê a imagem em binário para garantir que as shape 0 e shape 1 sejam height e width
+import cv2
 video = cv2.VideoCapture(0)
 ret, cap = video
 
