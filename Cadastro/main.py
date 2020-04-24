@@ -1,4 +1,4 @@
-from c import Cadastro
+from cadastro import Cadastro
 
 p1 = Cadastro()
 p1.criar_pasta()
