@@ -5,14 +5,17 @@ Track specifc targets in the camera motion range by their face characteristics. 
 ### Find faces in picture
 Find all faces present in picture:
 **IMAGE**
+
 **CODE**
 
 ### Register the target(s):
 **IMAGE**
+
 **CODE**
 
 ### Track registered target(s):
 **IMAGE**
+
 **CODE**
 
 ## Installation
@@ -43,7 +46,7 @@ This project is part of RAS's branches, specifically, a Bauru RAS's project with
 ## Contact
 Facebook:
 Instagram:
-Email: Nodyer
+Email: 
 
 
 
