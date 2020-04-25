@@ -82,4 +82,4 @@ while(True):
         cv2.destroyAllWindows()
         break
         
- video.release()
+video.release()
