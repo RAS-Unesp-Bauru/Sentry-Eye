@@ -88,3 +88,4 @@ while(True):
     if cv2.waitKey(0) & 0xFF == ord('q'):
         print("Forcefully Closed")
         cv2.destroyAllWindows()
+        break
