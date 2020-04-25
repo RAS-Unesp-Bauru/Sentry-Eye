@@ -76,7 +76,8 @@ while(True):
 
     #Mostra a imagem após a construção de todos retângulos
     cv2.imshow('imagenzinha', nova_img)
-
+    
+    cv2.waitKey(1)
     if k == 27:         # wait for ESC key to exit and terminate progra,
         cv2.destroyAllWindows()
         break
