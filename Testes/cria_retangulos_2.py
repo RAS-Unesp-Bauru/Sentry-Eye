@@ -1,4 +1,5 @@
 import cv2
+import time
 ###Código atualmente pega apenas UM ponto, assim demonstrando apenas o esqueleto
 ###da ideia. O ideal seria achar o centro da imagem e a partir dai refletir nos
 ###2 quadrantes opostos para formar o retângulo com centro no meio.
@@ -52,8 +53,18 @@ for i in range(numero_de_retangulos+1):
 cor_laranja = (0, 165, 255) #BGR
 nova_img = cap
 
+start_time = time.time()
+x = 1 # displays the frame rate every 1 second
+counter = 0
+
 while(True):
     ret, cap = video.read()
+
+    counter+=1
+    if (time.time() - start_time) > x :
+        print("FPS: ", counter / (time.time() - start_time))
+        counter = 0
+        start_time = time.time()
 
     ###Seguindo o esquema de criação de retângulos anterior, agora desenha os retângulos
     ###a partir do centro da imagem.
@@ -77,9 +88,9 @@ while(True):
     #Mostra a imagem após a construção de todos retângulos
     cv2.imshow('imagenzinha', nova_img)
     
-    cv2.waitKey(1)
+    k = cv2.waitKey(1)
     if k == 27:         # wait for ESC key to exit and terminate progra,
         cv2.destroyAllWindows()
         break
         
- video.release()
+video.release()
