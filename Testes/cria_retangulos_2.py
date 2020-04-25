@@ -77,7 +77,8 @@ while(True):
     #Mostra a imagem após a construção de todos retângulos
     cv2.imshow('imagenzinha', nova_img)
 
-    if cv2.waitKey(0) & 0xFF == ord('q'):
-        print("Forcefully Closed")
+    if k == 27:         # wait for ESC key to exit and terminate progra,
         cv2.destroyAllWindows()
         break
+        
+ video.release()
