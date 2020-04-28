@@ -140,9 +140,9 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
                     ponto01_lista = [esquerda, cima] #(x0, y0)
                     ponto02_lista = [direita, baixo] #(x1, y1)
 
-                    retangulo = [ponto01_lista, ponto02_lista, vel]
+                    retangulo = [ponto01_lista, ponto02_lista]
 
-                    lista_retangulos_pontos.append(pontos)
+                    lista_retangulos_pontos.append(retangulo)
 
             return lista_retangulos_pontos
 
