@@ -83,29 +83,94 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
         # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
         rgb_frame = frame_process[:, :, ::-1]
 
-        # Find all the faces and face encodings in the frame of video, cost most time
+        #Find all the faces and face encodings in the frame of video, cost most time
         face_locations = face_recognition.face_locations(rgb_frame)
         face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
+        
+        dimensions = frame_process.shape
+        #-----------------------------------------------------------------------------------------------------------
+        def criaRetangulos(numero_de_retangulos):
+            height = dimensions[0] / 2
+            width = dimensions[1] / 2
 
+            #Divide a quantidade que será iterada a altura e largura. Também inicia a menor velocidade.
+            altura_por_retangulo = height / numero_de_retangulos
+            largura_por_retangulo = width / numero_de_retangulos
+            menor_velocidade = 1
+
+            #Inicia uma lista vazia
+            lista_retangulos = []
+            lista_retangulos_pontos = []
+
+            iteracao = 0
+            #Loop para formar a lista
+            for i in range(numero_de_retangulos+1):
+
+                #Altura e largura da respectiva iteração. A cada Loop muda a posição
+                altura_retangulo = height - (altura_por_retangulo * numero_de_retangulos)
+                largura_retangulo = width - (largura_por_retangulo * numero_de_retangulos)
+
+                #Aumenta a velocidade, deve ser futuramente testada em relação ao último retângulo para conferir aonde o target
+                #está realmente contido
+                velocidade = menor_velocidade*iteracao
+
+                #Adiciona as propriedades dessa iteração a lista
+                novo_retangulo = [largura_retangulo, altura_retangulo, velocidade]
+                lista_retangulos.append(novo_retangulo)
+
+                numero_de_retangulos -= 1
+                iteracao += 1
+                
+                cor_laranja = (0, 165, 255) #BGR
+
+                for i in range(1, len(lista_retangulos)):
+                    esquerda = int(width) - int(lista_retangulos[i][0]) #x0
+                    direita = int(width) + int(lista_retangulos[i][0]) #x1
+
+                    cima = int(height) - int(lista_retangulos[i][0]) #y0
+                    baixo = int(height) + int(lista_retangulos[i][0]) #y1
+
+                    #Pontos principais para formarem o retângulo
+                    ponto01 = (esquerda, cima) #(x0, y0)
+                    ponto02 = (direita, baixo) #(x1, y1)
+
+                    #Salva a imagem desenhada como 'nova_img'
+                    nova_img = cv2.rectangle(frame_process, ponto01, ponto02, cor_laranja, 1)
+
+                    ponto01_lista = [esquerda, cima] #(x0, y0)
+                    ponto02_lista = [direita, baixo] #(x1, y1)
+
+                    retangulo = [ponto01_lista, ponto02_lista, vel]
+
+                    lista_retangulos_pontos.append(pontos)
+
+            return lista_retangulos_pontos
+
+
+        #-----------------------------------------------------------------------------------------------------------
         #Limita coordenadas#---------------------------------------------------------------------------
-        cor_laranja = (0, 165, 255) #BGR
+        '''cor_laranja = (0, 165, 255) #BGR
 
         altura = 300
         largura = 200
 
-        esquerda = int(frame_process.shape[1]/2) - int(largura/2) #x0
-        direita = int(frame_process.shape[1]/2) + int(largura/2) #x1
+        esquerda = int(dimensions[1]/2) - int(largura/2) #x0
+        direita = int(dimensions[1]/2) + int(largura/2) #x1
 
-        cima = int(frame_process.shape[0]/2) - int(altura/2) #y0
-        baixo = int(frame_process.shape[0]/2) + int(altura/2) #y1
+        cima = int(dimensions[0]/2) - int(altura/2) #y0
+        baixo = int(dimensions[0]/2) + int(altura/2) #y1
 
         #pontos principais para formarem o retângulo
         ponto01 = (esquerda, cima) #(x0, y0)
         ponto02 = (direita, baixo) #(x1, y1)
 
         cv2.rectangle(frame_process, ponto01, ponto02, cor_laranja, 1)
-        #-----------------------------------------------------------------------------------------------
+        '''#-----------------------------------------------------------------------------------------------
+            
+        #numero_de_retangulos = int(input("digite aqui o número de retângulos: "))
+        lista_ret = criaRetangulos(4)
         # Loop through each face in this frame of video
+
         for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
             # See if the face is a match for the known face(s)
             matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
@@ -116,6 +181,15 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
             if True in matches:
                 first_match_index = matches.index(True)
                 name = known_face_names[first_match_index]
+                if top < lista_ret[0][0][1]:
+                    print('Passou cima')
+                if bottom > lista_ret[0][1][1]:
+                    print('Passou baixo')
+                if right > lista_ret[0][1][0]:
+                    print('Passou lado direito')
+                if left < lista_ret[0][0][0]:
+                    print('Passou esquerda')
+                
                 #armazena coordenadas target----------
                 #cache = [[left, top], [right, bottom]]
                 #-------------------------------------
@@ -172,6 +246,15 @@ if __name__ == '__main__':
     target_image = face_recognition.load_image_file("target.png")
     target_face_encoding = face_recognition.face_encodings(target_image)[0]
 
+    """target_image_02 = face_recognition.load_image_file("target_02.png")
+    target_face_encoding = face_recognition.face_encodings(target_image_02)[1]
+
+    target_image_03 = face_recognition.load_image_file("target_03.png")
+    target_face_encoding = face_recognition.face_encodings(target_image_03)[2]
+
+    target_image_04 = face_recognition.load_image_file("target_04.png")
+    target_face_encoding = face_recognition.face_encodings(target_image_04)[3]
+"""
     # Load a second sample picture and learn how to recognize it.
     #biden_image = face_recognition.load_image_file("biden.jpg")
     #biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
@@ -182,7 +265,7 @@ if __name__ == '__main__':
     #    biden_face_encoding
     ]
     Global.known_face_names = [
-        "Adriel"
+        "Target"
     ]
 
     # Create workers
