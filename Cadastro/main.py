@@ -7,4 +7,4 @@ p1.tirar_foto(0) # webcam = 0 / video = 1
 
 print(p1.dir)
 
-fr.FaceRecognition(p1.dir)
+fr.faceREC(p1.dir)

@@ -23,7 +23,7 @@ class FaceRecognition:
         self.name = name
 
     # Get next worker's id
-    def next_id(current_id, worker_num):
+    def next_id(self, current_id, worker_num):
         if current_id == worker_num:
             return 1
         else:
@@ -31,7 +31,7 @@ class FaceRecognition:
 
 
     # Get previous worker's id
-    def prev_id(current_id, worker_num):
+    def prev_id(self, current_id, worker_num):
         if current_id == 1:
             return worker_num
         else:
@@ -39,7 +39,7 @@ class FaceRecognition:
 
 
     # A subprocess use to capture frames.
-    def capture(read_frame_list, Global, worker_num):
+    def capture(self, read_frame_list, Global, worker_num):
         # Get a reference to webcam #0 (the default one)
         video_capture = cv2.VideoCapture(0)
         # video_capture.set(3, 640)  # Width of the frames in the video stream.
@@ -62,7 +62,7 @@ class FaceRecognition:
 
 
     # Many subprocess use to process frames.
-    def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
+    def process(self, worker_id, read_frame_list, write_frame_list, Global, worker_num):
         
         known_face_encodings = Global.known_face_encodings
         known_face_names = Global.known_face_names
@@ -94,7 +94,7 @@ class FaceRecognition:
             
             dimensions = frame_process.shape
             #-----------------------------------------------------------------------------------------------------------
-            def criaRetangulos(numero_de_retangulos):
+            def criaRetangulos(self, numero_de_retangulos):
                 height = dimensions[0] / 2
                 width = dimensions[1] / 2
 
@@ -145,9 +145,9 @@ class FaceRecognition:
                         ponto01_lista = [esquerda, cima] #(x0, y0)
                         ponto02_lista = [direita, baixo] #(x1, y1)
 
-                        retangulo = [ponto01_lista, ponto02_lista, vel]
+                        retangulo = [ponto01_lista, ponto02_lista]
 
-                        lista_retangulos_pontos.append(pontos)
+                        lista_retangulos_pontos.append(retangulo)
 
                 return lista_retangulos_pontos
 
@@ -218,7 +218,7 @@ class FaceRecognition:
             Global.write_num = next_id(Global.write_num, worker_num)
 
 
-    def FaceRecognition():
+    def faceREC(self):
 
         # Fix Bug on MacOS
         if platform.system() == 'Darwin':
