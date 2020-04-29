@@ -38,7 +38,8 @@ class Cadastro:
                     check, frame = cap.read()
                     cv2.imshow("Capturando", frame)
                     key = cv2.waitKey(1)
-                    if key == ord('s'): 
+                    print("Pressione a tecla S para tirar a foto.")
+                if key == ord('s'):         # Realiza a captura pressionando a tecla "S"
                         cv2.imwrite(filename=self.dir, img=frame)
                         cap.release()
                         print("Foto salva!")
