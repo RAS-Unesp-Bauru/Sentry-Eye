@@ -32,6 +32,35 @@ face_encodings = []
 face_names = []
 process_this_frame = True
 
+cor_laranja = (0, 165, 255) #BGR
+
+def cria(frame, cor):
+        
+
+        altura = 300
+        largura = 250
+
+        esquerda = int(frame.shape[1]/2) - int(largura/2) #x0
+        direita = int(frame.shape[1]/2) + int(largura/2) #x1
+
+        cima = int(frame.shape[0]/2) - int(altura/2) #y0
+        baixo = int(frame.shape[0]/2) + int(altura/2) #y1
+
+        #pontos principais para formarem o retângulo
+        ponto01 = (esquerda, cima) #(x0, y0)
+        ponto02 = (direita, baixo) #(x1, y1)
+
+        lista = []
+        lista.append(cima)
+        lista.append(baixo)
+        lista.append(direita)
+        lista.append(esquerda)
+
+        cv2.rectangle(frame, ponto01, ponto02, cor, 1)
+
+        return lista
+
+
 while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
@@ -48,24 +77,7 @@ while True:
         face_locations = face_recognition.face_locations(rgb_small_frame)
         face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
 
-        #Limita coordenadas#---------------------------------------------------------------------------
-        cor_laranja = (0, 165, 255) #BGR
-
-        altura = 300
-        largura = 250
-
-        esquerda = int(frame.shape[1]/2) - int(largura/2) #x0
-        direita = int(frame.shape[1]/2) + int(largura/2) #x1
-
-        cima = int(frame.shape[0]/2) - int(altura/2) #y0
-        baixo = int(frame.shape[0]/2) + int(altura/2) #y1
-
-        #pontos principais para formarem o retângulo
-        ponto01 = (esquerda, cima) #(x0, y0)
-        ponto02 = (direita, baixo) #(x1, y1)
-
-        cv2.rectangle(frame, ponto01, ponto02, cor_laranja, 1)
-        #-----------------------------------------------------------------------------------------------
+        coord = cria(frame, cor_laranja)
 
         face_names = []
         for face_encoding in face_encodings:
@@ -100,14 +112,14 @@ while True:
 
         # Draw a box around the face
         cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
-        if top < cima:
+        if top < coord[0]:
             print('Passou cima')
-        if bottom > baixo:
+        if bottom > coord[1]:
             print('Passou baixo')
-        if right > direita:
+        if right > coord[2]:
             print('Passou lado direito')
-        if left < esquerda:
-            print('Passou esquerda')
+        if left < coord[3]:
+            print('Passou lado esquerdo')
 
         # Draw a label with a name below the face
         cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)

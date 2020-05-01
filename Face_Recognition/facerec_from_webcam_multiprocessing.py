@@ -192,7 +192,7 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
                 if right > direita:
                     print('Passou lado direito')
                 if left < esquerda:
-                    print('Passou esquerda')
+                    print('Passou lado esquerdo')
                 
                 #armazena coordenadas target----------
                 #cache = [[left, top], [right, bottom]]
