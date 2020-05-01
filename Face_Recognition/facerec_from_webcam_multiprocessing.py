@@ -140,16 +140,16 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
                     ponto01_lista = [esquerda, cima] #(x0, y0)
                     ponto02_lista = [direita, baixo] #(x1, y1)
 
-                    retangulo = [ponto01_lista, ponto02_lista]
+                    retangulo = [ponto01_lista, ponto02_lista, vel]
 
-                    lista_retangulos_pontos.append(retangulo)
+                    lista_retangulos_pontos.append(pontos)
 
             return lista_retangulos_pontos
 
 
         #-----------------------------------------------------------------------------------------------------------
         #Limita coordenadas#---------------------------------------------------------------------------
-        '''cor_laranja = (0, 165, 255) #BGR
+        cor_laranja = (0, 165, 255) #BGR
 
         altura = 300
         largura = 200
@@ -165,10 +165,14 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
         ponto02 = (direita, baixo) #(x1, y1)
 
         cv2.rectangle(frame_process, ponto01, ponto02, cor_laranja, 1)
-        '''#-----------------------------------------------------------------------------------------------
+        #-----------------------------------------------------------------------------------------------
             
         #numero_de_retangulos = int(input("digite aqui o número de retângulos: "))
-        lista_ret = criaRetangulos(4)
+
+        #Cria os retangulos
+        #lista_ret = criaRetangulos(4)
+        
+        
         # Loop through each face in this frame of video
 
         for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
@@ -181,13 +185,13 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
             if True in matches:
                 first_match_index = matches.index(True)
                 name = known_face_names[first_match_index]
-                if top < lista_ret[0][0][1]:
+                if top < cima:
                     print('Passou cima')
-                if bottom > lista_ret[0][1][1]:
+                if bottom > baixo:
                     print('Passou baixo')
-                if right > lista_ret[0][1][0]:
+                if right > direita:
                     print('Passou lado direito')
-                if left < lista_ret[0][0][0]:
+                if left < esquerda:
                     print('Passou esquerda')
                 
                 #armazena coordenadas target----------
