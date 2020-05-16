@@ -138,53 +138,34 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
                 #lista_ret[3][1][0] -> r3 -> [p1] -> direita
                 #lista_ret[3][1][1] -> r3 -> [p1] -> baixo
                 
-                if top < lista_ret[0][0][1]:
-                    if top > lista_ret[1][0][1]:
-                        print("Top r1")
-                    if top < lista_ret[1][0][1]:
-                        if top > lista_ret[2][0][1]:
-                            print("Top r2")
-                        if top < lista_ret[2][0][1]:
-                            if top > lista_ret[3][0][1]:
-                                print("Top r3")
-                            if top < lista_ret[3][0][1]:
-                                print("Top r4")
-                
-                if bottom > lista_ret[0][1][1]:
-                    if bottom < lista_ret[1][1][1]:
-                        print("Bottom r1")
-                    if bottom > lista_ret[1][1][1]:
-                        if bottom < lista_ret[2][1][1]:
-                            print("Bottom r2")
-                        if bottom > lista_ret[2][1][1]:
-                            if bottom < lista_ret[3][1][1]:
-                                print("Bottom r3")
-                            if bottom > lista_ret[3][1][1]:
-                                print("Bottom r4")
+                for n in range(len(lista_ret[1])):
+                    teste_esquerda = lista_ret[n][0][0] - left
+    
+                    if teste_esquerda > 0:
+                        print( "passou à esquerda do retângulo {}".format(n) )
+                        break
 
-                if left < lista_ret[0][0][0]:
-                    if left > lista_ret[1][0][0]:
-                        print("Left r1")
-                    if left < lista_ret[1][0][0]:
-                        if top > lista_ret[2][0][0]:
-                            print("Left r2")
-                        if left < lista_ret[2][0][0]:
-                            if top > lista_ret[3][0][0]:
-                                print("Left r3")
-                            if left < lista_ret[3][0][0]:
-                                print("Left r4")
+                for n in range(len(lista_ret[1])):
+                    teste_direita = lista_ret[n][1][0] - right
                     
-                if right > lista_ret[0][1][0]:
-                    if right < lista_ret[1][1][0]:
-                        print("Right r1")
-                    if right > lista_ret[1][1][0]:
-                        if right < lista_ret[2][1][0]:
-                            print("Right r2")
-                        if right > lista_ret[2][1][0]:
-                            if right < lista_ret[3][1][0]:
-                                print("Right r3")
-                            if right > lista_ret[3][1][0]:
-                                print("Right r4")
+                    if teste_direita < 0:
+                        print( "passou à direita do retângulo {}".format(n) )
+                        break
+
+                for n in range(len(lista_ret[1])):
+                    teste_cima = lista_ret[n][0][1] - top
+                        
+                    if teste_cima > 0:
+                        print( "passou acima do retângulo {}".format(n) )
+                        break
+
+                for n in range(len(lista_ret[1])):
+                    teste_baixo = lista_ret[n][1][1] - bottom
+                    
+                    if teste_baixo < 0:
+                        print( "passou abaixo do retângulo {}".format(n) )
+                        break
+
                 
                 
             
