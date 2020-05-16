@@ -5,6 +5,7 @@ import time
 import numpy
 import threading
 import platform
+import SLR
 
 #Propriedades do primeiro retângulo - R0  ---------------
 altura_ret_0 = 200 #altura do retângulo 0
@@ -23,64 +24,7 @@ laranja = (0, 165, 255)
 # OpenCV is *not* required to use the face_recognition library. It's only required if you want to run this
 # specific demo. If you have trouble installing it, try any of the other demos that don't require it instead.
 
- #-----------------------------------------------------------------------------------------------------------
-
-def criaRet(altura, largura, cor, frame_process, vel):  #Cria um retângulo de altura, largura, cor e velocidade 
-                                                        #conforme os parâmetros recebidos
-
-    #Frame process é o frame em que será inscrito o retângulo
-    
-    yC = frame_process.shape[0] / 2 #Coordenada Y do centro
-    xC = frame_process.shape[1] / 2 #Coordenada X do centro
-
-    cima = int (yC - altura/2) #Lado de cima do retângulo
-    baixo = int (yC + altura/2) #Lado de baixo do retângulo
-    esquerda = int(xC - largura/2) #Lado esquerdo do retângulo
-    direita = int(xC + largura/2) #Lado direito do retângulo
-
-    p0 = (esquerda, cima) #Ponto p0 do retângulo
-    p1 = (direita, baixo) #Ponto p1 do retângulo
-
-    p0_l = [esquerda, cima] #Ponto p0 do retângulo em formato de lista
-    p1_l = [direita, baixo] #Ponto p1 do retângulo em formato de lista
-
-    cv2.rectangle(frame_process, p0, p1, cor, 1) #Escreve o retângulo
-
-    ret = [p0_l, p1_l, vel] #Cria vetor Retângulo que contem os pontos formadores e a velocidade
-
-    return ret
-
-
-def criaListaRetangulos(ret0, numero_de_retangulos, frame_process): #Cria a lista de todos os retângulos a partir do centro
-
-    yC = frame_process.shape[0] / 2 #Coordenada Y do centro
-    xC = frame_process.shape[1] / 2 #Coordenada X do centro
-
-    #Divide a quantidade que será iterada a altura e largura. Também inicia a menor velocidade.
-    altura_por_retangulo = (yC - altura_ret_0/2) / numero_de_retangulos
-    largura_por_retangulo = (xC - largura_ret_0/2) / numero_de_retangulos
-    menor_velocidade = 1
-
-    #Inicia uma lista vazia
-    lista_retangulos = []
-
-    altura = altura_ret_0 + altura_por_retangulo*2
-    largura = largura_ret_0 + largura_por_retangulo*2
-
-    lista_retangulos.append(ret0)
-
-    #Loop para formar a lista
-    for i in range(numero_de_retangulos):
-
-        #print(i)
-        vel = menor_velocidade*(i+2) #Velocidade do retângulo
-        retangulo = criaRet(altura, largura, laranja, frame_process, vel) #Criando cada retângulo da lista
-        altura += altura_por_retangulo*2 #altura do retângulo i da lista
-        largura += largura_por_retangulo*2 #largura do retângulo i da lista
-        lista_retangulos.append(retangulo) 
-
-    return lista_retangulos
-
+#-----------------------------------------------------------------------------------------------------------
 
 # Get next worker's id
 def next_id(current_id, worker_num):
@@ -153,10 +97,9 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
         face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
             
         #Criação dos retângulos
-        ret0 = criaRet(altura_ret_0, largura_ret_0, roxo, frame_process, 1) #Cria R0
-        lista_ret = criaListaRetangulos(ret0, 3, frame_process) #Cria lista de retângulos após R0 
-        """print("\nLista\n")
-        print(lista_ret)"""
+        ret0 = SLR.criaRet(altura_ret_0, largura_ret_0, roxo, frame_process, 1) #Cria R0
+        lista_ret = SLR.criaListaRetangulos(ret0, 3, frame_process) #Cria lista de retângulos após R0 
+    
         
         # Loop through each face in this frame of video
         for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
@@ -302,8 +245,8 @@ if __name__ == '__main__':
     # Create arrays of known face encodings and their names
     Global.known_face_encodings = [
         target_face_encoding
-    #    biden_face_encoding
     ]
+
     Global.known_face_names = [
         "Target"
     ]
@@ -328,7 +271,7 @@ if __name__ == '__main__':
             if len(fps_list) > 5 * worker_num:
                 fps_list.pop(0)
             fps = len(fps_list) / numpy.sum(fps_list)
-            #print("fps: %.2f" % fps)
+            print("fps: %.2f" % fps)
 
             # Calculate frame delay, in order to make the video look smoother.
             # When fps is higher, should use a smaller ratio, or fps will be limited in a lower value.
