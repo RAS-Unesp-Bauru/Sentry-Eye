@@ -7,8 +7,15 @@ import threading
 import platform
 import SLR
 
-#Velocidade----------------------------------------------
+#Velocidade ---------------------------------------------
 razao = 2
+#--------------------------------------------------------
+
+#Direções -----------------------------------------------
+cima = 0
+direita = 1
+baixo = 2
+esquerda = 3
 #--------------------------------------------------------
 
 #Propriedades do primeiro retângulo - R0  ---------------
@@ -29,6 +36,107 @@ laranja = (0, 165, 255)
 # specific demo. If you have trouble installing it, try any of the other demos that don't require it instead.
 
 #-----------------------------------------------------------------------------------------------------------
+def soma_dir(direcao, lista_ret, top, right, bottom, left):
+
+    #t1 = t2 = t3 = t4 = 0
+    if direcao == esquerda:
+      
+        if lista_ret[0][0][0] >= left:
+            t1=razao
+        else:
+            t1=0
+
+        if lista_ret[1][0][0] >= left:
+            t2=razao
+        else:
+            t2=0
+        
+        if lista_ret[2][0][0] >= left:  
+            t3=razao
+        else:
+            t3=0
+        
+        if lista_ret[3][0][0] >= left:  
+            t4=razao
+        else:
+            t4=0
+
+        return (t1 + t2 + t3 + t4)
+
+    elif direcao == cima:
+
+        if lista_ret[0][0][1] >= top:
+            t1=razao
+        else:
+            t1=0
+
+        if lista_ret[1][0][1] >= top:
+            t2=razao
+        else:
+            t2=0
+        
+        if lista_ret[2][0][1] >= top:  
+            t3=razao
+        else:
+            t3=0
+        
+        if lista_ret[3][0][1] >= top:  
+            t4=razao
+        else:
+            t4=0
+
+        return (t1 + t2 + t3 + t4)
+
+    elif direcao == direita:
+
+        if lista_ret[0][1][0] <= right:
+            t1=razao
+        else:
+            t1=0
+
+        if lista_ret[1][1][0] <= right:
+            t2=razao
+        else:
+            t2=0
+        
+        if lista_ret[2][1][0] <= right:  
+            t3=razao
+        else:
+            t3=0
+        
+        if lista_ret[3][1][0] <= right:  
+            t4=razao
+        else:
+            t4=0
+
+        return (t1 + t2 + t3 + t4)
+        
+
+    elif direcao == baixo:
+      
+        if lista_ret[0][1][1] <= bottom:
+            t1=razao
+        else:
+            t1=0
+
+        if lista_ret[1][1][1] <= bottom:
+            t2=razao
+        else:
+            t2=0
+        
+        if lista_ret[2][1][1] <= bottom:  
+            t3=razao
+        else:
+            t3=0
+        
+        if lista_ret[3][1][1] <= bottom:  
+            t4=razao
+        else:
+            t4=0
+        
+        return (t1 + t2 + t3 + t4)
+
+    
 
 # Get next worker's id
 def next_id(current_id, worker_num):
@@ -142,29 +250,12 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
                 #lista_ret[3][1][0] -> r3 -> [p1] -> direita
                 #lista_ret[3][1][1] -> r3 -> [p1] -> baixo
                 
-                
-                if((lista_ret[0][0][1] - top) > 0):
-                    t1=razao
-                else:
-                    t1=0
+                #-------------------------------------------------------------------------
 
-                if((lista_ret[1][0][1] - top) > 0):
-                    t2=razao
-                else:
-                    t2=0
-                
-                if((lista_ret[2][0][1] - top) > 0):  
-                    t3=razao
-                else:
-                    t3=0
-                
-                if((lista_ret[3][0][1] - top) > 0):  
-                    t4=razao
-                else:
-                    t4=0
-
-                soma_top = t1 + t2 + t3 + t4
-                print('Soma top: %d' % soma_top)
+                print('Soma top: %d' % (soma_dir(cima, lista_ret, top, right, bottom, left)))
+                print('Soma right: %d' % (soma_dir(direita, lista_ret, top, right, bottom, left)))
+                print('Soma bottom: %d' % (soma_dir(baixo, lista_ret, top, right, bottom, left)))
+                print('Soma left: %d' % (soma_dir(esquerda, lista_ret, top, right, bottom, left)))
 
             #print("\n")
 
