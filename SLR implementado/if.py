@@ -7,6 +7,10 @@ import threading
 import platform
 import SLR
 
+#Velocidade----------------------------------------------
+razao = 2
+#--------------------------------------------------------
+
 #Propriedades do primeiro retângulo - R0  ---------------
 altura_ret_0 = 200 #altura do retângulo 0
 largura_ret_0 = 300 #largura do retângulo 0
@@ -140,28 +144,28 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
                 
                 
                 if((lista_ret[0][0][1] - top) > 0):
-                    a=1
+                    t1=razao
                 else:
-                    a=0
+                    t1=0
 
                 if((lista_ret[1][0][1] - top) > 0):
-                    b=1
+                    t2=razao
                 else:
-                    b=0
+                    t2=0
                 
                 if((lista_ret[2][0][1] - top) > 0):  
-                    c=1
+                    t3=razao
                 else:
-                    c=0
+                    t3=0
                 
                 if((lista_ret[3][0][1] - top) > 0):  
-                    d=1
+                    t4=razao
                 else:
-                    d=0
+                    t4=0
 
-                print(a+b+c+d)
-                #else:
-                #    print("Top r4")          
+                soma_top = t1 + t2 + t3 + t4
+                print('Soma top: %d' % soma_top)
+
             #print("\n")
 
             # Draw a box around the face
