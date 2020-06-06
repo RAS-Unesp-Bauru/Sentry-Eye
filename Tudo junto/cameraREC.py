@@ -9,15 +9,7 @@ import platform
 import SLR
 from cadastro import Cadastro
 
-#Propriedades do primeiro retângulo - R0  ---------------
-altura_ret_0 = 200 #altura do retângulo 0
-largura_ret_0 = 300 #largura do retângulo 0
-#--------------------------------------------------------
 
-#Cores BGR ----------------------------------------------
-roxo = (65, 9, 88)
-laranja = (0, 165, 255)
-#--------------------------------------------------------
 
 def conditions(coordenatesTarget, listRectangles):
     target = [coordenatesTarget[i]*(-1) if i%3==0 else coordenatesTarget[i] for i in range(4)]
@@ -113,7 +105,7 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
         face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
             
         #Criação dos retângulos
-        ret0 = SLR.criaRet(altura_ret_0, largura_ret_0, roxo, frame_process, 1) #Cria R0
+        ret0 = SLR.criaRet(SLR.altura_ret_0, SLR.largura_ret_0, SLR.roxo, frame_process, 1) #Cria R0
         lista_ret = SLR.criaListaRetangulos(ret0, 3, frame_process) #Cria lista de retângulos após R0 
     
         # Loop through each face in this frame of video
@@ -200,6 +192,7 @@ if __name__ == '__main__':
     last_num = 1
     fps_list = []
     tmp_time = time.time()
+
     while not Global.is_exit:
         while Global.write_num != last_num:
             last_num = int(Global.write_num)
