@@ -5,26 +5,8 @@ import time
 import numpy
 import threading
 import platform
-
 import SLR
 from cadastro import Cadastro
-
-
-
-def conditions(coordenatesTarget, listRectangles):
-    target = [coordenatesTarget[i]*(-1) if i%3==0 else coordenatesTarget[i] for i in range(4)]
-    positions = {0: 'top', 1: 'right', 2: 'bottom', 3: 'left'}
-    print(target)
-
-    for direction in range(4):
-        for rectangle in range(3,-1,-1):
-            if listRectangles[rectangle][0][direction] >= target[direction]:
-                print('r{}: {}'.format(rectangle, direction))
-                print(listRectangles[rectangle][0][direction], target[direction])
-                # return rectangle
-                break
-
-
 
 # This is a little bit complicated (but fast) example of running face recognition on live video from your webcam.
 # This example is using multiprocess.
@@ -115,12 +97,11 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
 
             name = "Desconhecido"
 
-            conditions(face_locations[0], lista_ret) # <----------------------------------------
-
             # If a match was found in known_face_encodings, just use the first one.
             if True in matches:
                 first_match_index = matches.index(True)
                 name = known_face_names[first_match_index]
+                conditions(face_locations[0], lista_ret)
 
             # Draw a box around the face
             cv2.rectangle(frame_process, (left, top), (right, bottom), (0, 0, 255), 2)

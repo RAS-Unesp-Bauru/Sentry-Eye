@@ -34,7 +34,6 @@ def criaRet(altura, largura, cor, frame_process, vel):  #Cria um retângulo de a
 
     return ret
 
-
 def criaListaRetangulos(ret0, numero_de_retangulos, frame_process): #Cria a lista de todos os retângulos a partir do centro
 
     yC = frame_process.shape[0] / 2 #Coordenada Y do centro
@@ -65,3 +64,17 @@ def criaListaRetangulos(ret0, numero_de_retangulos, frame_process): #Cria a list
 
     return lista_retangulos
 
+def conditions(coordenatesTarget, listRectangles): #Verifica se a target passou em cada diração e retângulo
+    target = [coordenatesTarget[i]*(-1) if i%3==0 else coordenatesTarget[i] for i in range(4)]
+    positions = {0: 'top', 1: 'right', 2: 'bottom', 3: 'left'}
+    limit_Numbers = len(listRectangles)
+
+    for direction in range(4): #Verifica em cada direção
+        for rectangle in range(limit_Numbers-1): #Verifica em cada retângulo
+            if listRectangles[rectangle][0][direction] <= target[direction] and listRectangles[rectangle+1][0][direction] > target[direction]:
+                print('r{}: {}'.format(rectangle, positions.get(direction)))
+                return rectangle
+                break
+            elif listRectangles[limit_Numbers-1][0][direction] == target[direction]:
+                print('r{}: {}'.format(limit_Numbers - 2, positions.get(direction)))
+                return limit_Numbers - 2
