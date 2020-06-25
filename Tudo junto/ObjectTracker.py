@@ -10,7 +10,7 @@ import imutils
 import time
 import cv2
 
-class Teste:
+class Tracker:
   def __init__(self):
     pass
   
