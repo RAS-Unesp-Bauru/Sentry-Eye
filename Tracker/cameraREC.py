@@ -122,18 +122,17 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
                 p2 = obj_teste.getP2()
                 #print(p1)
                 #print(p2)
-                print(coordenadas)
+                #print(coordenadas)
                 if(p1!=None and p2!=None):
                     cv2.rectangle(frame_process, (p1[0], p1[1]), (p2[0], p2[1]), (15, 130, 0), 2)
                     SLR.conditions([p1[1], p2[0], p2[1], p1[0]], lista_ret)
+
         else:
             for(top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
                 # See if the face is a match for the known face(s)
                 matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
 
                 name = "Desconhecido"
-
-                #conditions(face_locations[0], lista_ret) # <----------------------------------------
 
                 # If a match was found in known_face_encodings, just use the first one.
                 if True in matches:
@@ -143,7 +142,7 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
                     name = known_face_names[first_match_index]
                     #cache = [left*1.1, top*1.1, right*0.5, bottom*0.5]
                     #cache = (left*1.1, top*1.1, right*0.5, bottom*0.5)
-                    cache = (right*0.5, bottom*0.5, left*1.1, top*1.1)
+                    cache = (right*0.8, bottom*0.5, left*0.35, top*0.8)
                     #cache = [left, top, right, bottom]
                     #print(type(cache[0]))
                     coordenadas = None
@@ -222,9 +221,6 @@ if __name__ == '__main__':
     for worker_id in range(1, worker_num + 1):
         p.append(Process(target=process, args=(worker_id, read_frame_list, write_frame_list, Global, worker_num,)))
         p[worker_id].start()
-
-    # ttt = threading.Thread(target=maisum.start_obj_tracking, args=(coordenadas_obj_tracking, frame_global))
-    # ttt.start()
    
     # Start to show video
     last_num = 1
