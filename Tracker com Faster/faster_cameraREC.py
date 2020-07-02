@@ -16,7 +16,6 @@ import threading
 # specific demo. If you have trouble installing it, try any of the other demos that don't require it instead.
 
 # Get a reference to webcam #0 (the default one)
-url = "http://192.168.42.129:8080/video"
 
 pessoa1 = Cadastro()
 pessoa1.criar_pasta()

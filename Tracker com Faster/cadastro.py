@@ -34,7 +34,7 @@ class Cadastro:
                 cap = cv2.VideoCapture(nome_video)
             
             elif video_ou_webcam == 2:
-                cap = cv2.VideoCapture("http://192.168.42.129:8080/video")
+                # cap = cv2.VideoCapture("http://192.168.42.129:8080/video")
             
             while True:
                 try:
