@@ -104,25 +104,24 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
         # Loop through each face in this frame of video
 
         #print("Status do track: %d" %(object_tracking.getStatus()))
-
+        
+        print(cache)
+        
         if face_encodings==[]:
             
             #Wait to write
-            #print(cache)
+            
             if cache!=None:
                 #coordenadas = (cache[0], cache[1], cache[2], cache[3])
                 coordenadas = cache
-                #coordenadas = (181, 72, 367, 253)
+               
                 obj_teste.setFrame(frame_process)
                 obj_teste.setCoord(coordenadas) 
                 obj_teste.start_tracking()
-                #print("Status do obj na classe principal: %d" % (obj_teste.getStatus()))
 
                 p1 = obj_teste.getP1()
                 p2 = obj_teste.getP2()
-                #print(p1)
-                #print(p2)
-                #print(coordenadas)
+                
                 if(p1!=None and p2!=None):
                     cv2.rectangle(frame_process, (p1[0], p1[1]), (p2[0], p2[1]), (15, 130, 0), 2)
                     SLR.conditions([p1[1], p2[0], p2[1], p1[0]], lista_ret)
@@ -136,12 +135,13 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
 
                 # If a match was found in known_face_encodings, just use the first one.
                 if True in matches:
-                    #print(face_locations[0])
+
                     SLR.conditions(face_locations[0], lista_ret)
                     first_match_index = matches.index(True)
                     name = known_face_names[first_match_index]
                     #cache = [left*1.1, top*1.1, right*0.5, bottom*0.5]
                     #cache = (left*1.1, top*1.1, right*0.5, bottom*0.5)
+                    cache = None
                     cache = (right*0.8, bottom*0.5, left*0.35, top*0.8)
                     #cache = [left, top, right, bottom]
                     #print(type(cache[0]))
