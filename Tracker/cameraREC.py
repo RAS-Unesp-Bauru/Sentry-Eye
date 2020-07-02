@@ -6,24 +6,9 @@ import numpy
 import threading
 import platform
 
-import teste
+import testetrack 
 import SLR
 from cadastro import Cadastro
-
-
-
-def conditions(coordenatesTarget, listRectangles):
-    target = [coordenatesTarget[i]*(-1) if i%3==0 else coordenatesTarget[i] for i in range(4)]
-    positions = {0: 'top', 1: 'right', 2: 'bottom', 3: 'left'}
-    print(target)
-
-    for direction in range(4):
-        for rectangle in range(3,-1,-1):
-            if listRectangles[rectangle][0][direction] >= target[direction]:
-                print('r{}: {}'.format(rectangle, direction))
-                print(listRectangles[rectangle][0][direction], target[direction])
-                # return rectangle
-                break
 
 
 
@@ -80,10 +65,11 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
     known_face_encodings = Global.known_face_encodings
     known_face_names = Global.known_face_names
     
-    cache = []
+    #cache = []
+    cache = None
 
-    object_tracking = teste.Object_Tracking()
-    object_tracking.start()
+    obj_teste = testetrack.Object_Tracking()
+    obj_teste.start()    
     
     while not Global.is_exit:
 
@@ -112,23 +98,34 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
         face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
             
         #Criação dos retângulos
-        #ret0 = SLR.criaRet(SLR.altura_ret_0, SLR.largura_ret_0, SLR.roxo, frame_process, 1) #Cria R0
-        #lista_ret = SLR.criaListaRetangulos(ret0, 3, frame_process) #Cria lista de retângulos após R0 
+        ret0 = SLR.criaRet(SLR.altura_ret_0, SLR.largura_ret_0, SLR.roxo, frame_process, 1) #Cria R0
+        lista_ret = SLR.criaListaRetangulos(ret0, 3, frame_process) #Cria lista de retângulos após R0 
     
         # Loop through each face in this frame of video
 
-        if face_encodings==[]:
-            # Wait to write
-            #print(cache)
-            if cache!=[]:
-                coordenadas = (cache[0], cache[1], cache[2], cache[3])
-                print("perdeu")
-                print("Ultima pos ")
-                print(coordenadas)
-                object_tracking.setFrame(frame_process)
-                object_tracking.setCoordenadas(coordenadas)
-                object_tracking.start_tracking()         
+        #print("Status do track: %d" %(object_tracking.getStatus()))
 
+        if face_encodings==[]:
+            
+            #Wait to write
+            #print(cache)
+            if cache!=None:
+                #coordenadas = (cache[0], cache[1], cache[2], cache[3])
+                coordenadas = cache
+                #coordenadas = (181, 72, 367, 253)
+                obj_teste.setFrame(frame_process)
+                obj_teste.setCoord(coordenadas) 
+                obj_teste.start_tracking()
+                #print("Status do obj na classe principal: %d" % (obj_teste.getStatus()))
+
+                p1 = obj_teste.getP1()
+                p2 = obj_teste.getP2()
+                #print(p1)
+                #print(p2)
+                print(coordenadas)
+                if(p1!=None and p2!=None):
+                    cv2.rectangle(frame_process, (p1[0], p1[1]), (p2[0], p2[1]), (15, 130, 0), 2)
+                    SLR.conditions([p1[1], p2[0], p2[1], p1[0]], lista_ret)
         else:
             for(top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
                 # See if the face is a match for the known face(s)
@@ -140,11 +137,18 @@ def process(worker_id, read_frame_list, write_frame_list, Global, worker_num):
 
                 # If a match was found in known_face_encodings, just use the first one.
                 if True in matches:
-                    #if(obj_tracking.getStatus()==True):
+                    #print(face_locations[0])
+                    SLR.conditions(face_locations[0], lista_ret)
                     first_match_index = matches.index(True)
                     name = known_face_names[first_match_index]
-                    cache = [left, top, right, bottom]
-                    object_tracking.stop()
+                    #cache = [left*1.1, top*1.1, right*0.5, bottom*0.5]
+                    #cache = (left*1.1, top*1.1, right*0.5, bottom*0.5)
+                    cache = (right*0.5, bottom*0.5, left*1.1, top*1.1)
+                    #cache = [left, top, right, bottom]
+                    #print(type(cache[0]))
+                    coordenadas = None
+                    obj_teste.stop_tracking()
+                    
                 
                 # Draw a box around the face
                 
@@ -175,6 +179,8 @@ if __name__ == '__main__':
     pessoa1.criar_pasta()
     pessoa1.tirar_foto(0) # webcam = 0 / video = 1
 
+    coordenadas_obj_tracking = ()
+
     # Global variables
     Global = Manager().Namespace()
     Global.buff_num = 1
@@ -197,6 +203,7 @@ if __name__ == '__main__':
     # Create a thread to capture frames (if uses subprocess, it will crash on Mac)
     p.append(threading.Thread(target=capture, args=(read_frame_list, Global, worker_num,)))
     p[0].start()
+    
 
     # Load a sample picture and learn how to recognize it.
     target_image = face_recognition.load_image_file(pessoa1.dir)
@@ -216,6 +223,9 @@ if __name__ == '__main__':
         p.append(Process(target=process, args=(worker_id, read_frame_list, write_frame_list, Global, worker_num,)))
         p[worker_id].start()
 
+    # ttt = threading.Thread(target=maisum.start_obj_tracking, args=(coordenadas_obj_tracking, frame_global))
+    # ttt.start()
+   
     # Start to show video
     last_num = 1
     fps_list = []
@@ -253,10 +263,12 @@ if __name__ == '__main__':
 
         # Hit 'q' on the keyboard to quit!
         if cv2.waitKey(1) & 0xFF == ord('q'):
+            object_tracking.stop_tracking()
             Global.is_exit = True
             break
 
         time.sleep(0.01)
 
+    video_capture.release()
     # Quit
     cv2.destroyAllWindows()
