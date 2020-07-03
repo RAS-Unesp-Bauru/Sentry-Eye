@@ -4,8 +4,10 @@ import numpy as np
 import testetrack 
 import SLR
 import threading
+import serial
 from cadastro import Cadastro
 from setSpeed import SetSpeed
+import arduino
 
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
@@ -19,6 +21,7 @@ from setSpeed import SetSpeed
 # Get a reference to webcam #0 (the default one)
 option1 = SetSpeed()
 speed = option1.get_speed()
+#arduino.sendArduino(speed)
 print("You chose the {} velocity".format(speed))
 pessoa1 = Cadastro()
 pessoa1.criar_pasta()
@@ -89,7 +92,8 @@ while True:
                 
                 if(p1!=None and p2!=None):
                     cv2.rectangle(frame, (p1[0], p1[1]), (p2[0], p2[1]), (15, 130, 0), 2)
-                    SLR.conditions([p1[1], p2[0], p2[1], p1[0]], lista_ret)
+                    directionChar = SLR.conditions([top, right, bottom, left], lista_ret)
+                    #arduino.sendArduino(directionChar)
         
         else:
             #print("Achei alguem aqui")
@@ -122,8 +126,10 @@ while True:
                     right *= 4
                     bottom *= 4
                     left *= 4
-                    SLR.conditions([top, right, bottom, left], lista_ret)
-                    
+                    #Send 
+                    directionChar = SLR.conditions([top, right, bottom, left], lista_ret)
+                    #arduino.sendArduino(directionChar)
+
                     cache = []
                     cache = [left, top, right*0.5, bottom*0.5]
 
