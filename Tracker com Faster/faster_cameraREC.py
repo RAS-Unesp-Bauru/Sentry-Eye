@@ -3,8 +3,9 @@ import cv2
 import numpy as np
 import testetrack 
 import SLR
-from cadastro import Cadastro
 import threading
+from cadastro import Cadastro
+from setSpeed import SetSpeed
 
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
@@ -16,7 +17,9 @@ import threading
 # specific demo. If you have trouble installing it, try any of the other demos that don't require it instead.
 
 # Get a reference to webcam #0 (the default one)
-
+option1 = SetSpeed()
+speed = option1.get_speed()
+print("You chose the {} velocity".format(speed))
 pessoa1 = Cadastro()
 pessoa1.criar_pasta()
 pessoa1.tirar_foto(0) # webcam = 0 / video = 1
