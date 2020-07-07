@@ -79,109 +79,23 @@ def criaListaRetangulos(ret0, numero_de_retangulos, frame_process): #Cria a list
 
 def conditions(coordenatesTarget, listRectangles): #Verifica se a target passou em cada diração e retângulo
     target = [coordenatesTarget[i]*(-1) if i%3==0 else coordenatesTarget[i] for i in range(4)]
-    positions = {0: 'top', 1: 'right', 2: 'bottom', 3: 'left'}
+    positions = {0: 't', 1: 'r', 2: 'b', 3: 'l'}
     limit_Numbers = len(listRectangles)
+    results = []
+               
 
     for direction in range(4): #Verifica em cada direção
         for rectangle in range(limit_Numbers-1): #Verifica em cada retângulo
             if listRectangles[rectangle][0][direction] <= target[direction] and listRectangles[rectangle+1][0][direction] > target[direction]:
                 print('r{}: {}'.format(rectangle, positions.get(direction)))
-                return rectangle
-                break
+                results.append((rectangle, positions.get(direction)))
+
             elif listRectangles[limit_Numbers-1][0][direction] == target[direction]:
                 print('r{}: {}'.format(limit_Numbers - 2, positions.get(direction)))
-                return limit_Numbers - 2
+                results.append((limit_Numbers - 2, positions.get(direction)))
+    print("\n")           
+    if results != []: 
+        return results   
 
-def if_antigo(direcao, lista_ret, top, right, bottom, left):
+     
 
-    if direcao == esquerda:
-        if lista_ret[0][0][0] >= left:
-            t1=razao
-        else:
-            t1=0
-
-        if lista_ret[1][0][0] >= left:
-            t2=razao
-        else:
-            t2=0
-        
-        if lista_ret[2][0][0] >= left:  
-            t3=razao
-        else:
-            t3=0
-        
-        if lista_ret[3][0][0] >= left:  
-            t4=razao
-        else:
-            t4=0
-
-        return (t1 + t2 + t3 + t4)
-
-    elif direcao == cima:
-        if lista_ret[0][0][1] >= top:
-            t1=razao
-        else:
-            t1=0
-
-        if lista_ret[1][0][1] >= top:
-            t2=razao
-        else:
-            t2=0
-        
-        if lista_ret[2][0][1] >= top:  
-            t3=razao
-        else:
-            t3=0
-        
-        if lista_ret[3][0][1] >= top:  
-            t4=razao
-        else:
-            t4=0
-
-        return (t1 + t2 + t3 + t4)
-
-    elif direcao == direita:
-        if lista_ret[0][1][0] <= right:
-            t1=razao
-        else:
-            t1=0
-
-        if lista_ret[1][1][0] <= right:
-            t2=razao
-        else:
-            t2=0
-        
-        if lista_ret[2][1][0] <= right:  
-            t3=razao
-        else:
-            t3=0
-        
-        if lista_ret[3][1][0] <= right:  
-            t4=razao
-        else:
-            t4=0
-
-        return (t1 + t2 + t3 + t4)
-
-    elif direcao == baixo:
-        if lista_ret[0][1][1] <= bottom:
-            t1=razao
-        else:
-            t1=0
-
-        if lista_ret[1][1][1] <= bottom:
-            t2=razao
-        else:
-            t2=0
-        
-        if lista_ret[2][1][1] <= bottom:  
-            t3=razao
-        else:
-            t3=0
-        
-        if lista_ret[3][1][1] <= bottom:  
-            t4=razao
-        else:
-            t4=0
-        
-        return (t1 + t2 + t3 + t4)

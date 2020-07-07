@@ -49,7 +49,7 @@ face_encodings = []
 face_names = []
 process_this_frame = True
 
-cache = []
+cache = None
 
 obj_teste = testetrack.Object_Tracking()
 obj_teste.start()    
@@ -79,21 +79,22 @@ while True:
         if(face_encodings==[]):
             #print("Tem ninguem nao truta")url
             
-            if(cache!=[]):
+            if(cache!=None):
                 #print("Ja teve alguem mas sumiu")
                 coordenadas = (cache[0], cache[1], cache[2], cache[3])
                
-                obj_teste.setFrame(frame)
-                obj_teste.setCoord(coordenadas) 
-                obj_teste.start_tracking()
+                obj_teste.start_tracking(frame, coordenadas)
 
                 p1 = obj_teste.getP1()
                 p2 = obj_teste.getP2()
                 
                 if(p1!=None and p2!=None):
                     cv2.rectangle(frame, (p1[0], p1[1]), (p2[0], p2[1]), (15, 130, 0), 2)
-                    directionChar = SLR.conditions([top, right, bottom, left], lista_ret)
-                    #arduino.sendArduino(directionChar)
+                    rectAndDirect = SLR.conditions([top, right, bottom, left], lista_ret) 
+                    # rectangle = rectAndDirect[0]
+                    # direction = rectAndDirect[1]
+                    #arduino.sendArduino(rectangle)
+                    #arduino.sendArduino(direction)
         
         else:
             #print("Achei alguem aqui")
@@ -127,10 +128,17 @@ while True:
                     bottom *= 4
                     left *= 4
                     #Send 
-                    directionChar = SLR.conditions([top, right, bottom, left], lista_ret)
-                    #arduino.sendArduino(directionChar)
+                    rectAndDirect = SLR.conditions([top, right, bottom, left], lista_ret) 
+                    if rectAndDirect is not None:
+                        rectangle_1 = rectAndDirect[0][0]
+                        direction_1 = rectAndDirect[0][1]
+                        if len(rectAndDirect) == 2: 
+                            rectangle_2 = rectAndDirect[1][0]
+                            direction_2 = rectAndDirect[1][1]     
+                    #arduino.sendArduino(rectangle)
+                    #arduino.sendArduino(direction)
 
-                    cache = []
+                    cache = None
                     cache = [left, top, right*0.5, bottom*0.5]
 
                     coordenadas = None
@@ -169,3 +177,4 @@ while True:
 # Release handle to the webcam
 video_capture.release()
 cv2.destroyAllWindows()
+

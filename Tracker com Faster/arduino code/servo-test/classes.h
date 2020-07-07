@@ -8,15 +8,12 @@ class Python{
 
     public:
 
-    Python();
+        Python();
 
-    char bringSpeed();
-    int setSpeed(char speed);
-
-
-
-    void followTarget(int numerical_speed);
-
+        char bringSpeed();
+        int setSpeed(char speed);
+        void followTarget(int numerical_speed);
+        void survey();
 
 }
 
