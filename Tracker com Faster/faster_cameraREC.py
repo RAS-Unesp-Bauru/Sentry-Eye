@@ -5,6 +5,8 @@ import testetrack
 import SLR
 import threading
 import serial
+from imutils.video import FPS
+from teste_sentry import Sentry
 from cadastro import Cadastro
 from setSpeed import SetSpeed
 import arduino
@@ -23,11 +25,15 @@ option1 = SetSpeed()
 speed = option1.get_speed()
 #arduino.sendArduino(speed)
 print("You chose the {} velocity".format(speed))
+
 pessoa1 = Cadastro()
 pessoa1.criar_pasta()
 pessoa1.tirar_foto(0) # webcam = 0 / video = 1
 
 video_capture = cv2.VideoCapture(0)
+
+fps = FPS()
+fps.start()
 
 
 # Load a sample picture and learn how to recognize it.
@@ -48,16 +54,24 @@ face_locations = []
 face_encodings = []
 face_names = []
 process_this_frame = True
-
 cache = None
 
 obj_teste = testetrack.Object_Tracking()
-obj_teste.start()    
+obj_teste.start()   
+
+sentry = Sentry(15)
+sentry.start()
 
 while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
+    
+    fps.update()
+    fps.stop()
+    
+    cv2.putText(frame, "FPS: {:.2f}".format(fps.fps()), (31, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
 
+    #cv2.putText(frame, fps.fps(), (frame.shape[0]*0.12, frame.shape[1]*0.8), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 129, 35), 2)
     # Resize frame of video to 1/4 size for faster face recognition processing
     small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
 
@@ -65,7 +79,9 @@ while True:
     rgb_small_frame = small_frame[:, :, ::-1]
     
     # Only process every other frame of video to save time
+
     if process_this_frame:
+
         # Find all the faces and face encodings in the current frame of video
         face_locations = face_recognition.face_locations(rgb_small_frame)
         face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
@@ -74,13 +90,12 @@ while True:
         lista_ret = SLR.criaListaRetangulos(ret0, 3, frame) #Cria lista de retângulos após R0 
 
         face_names = []
-        #print(face_encodings)
 
         if(face_encodings==[]):
-            #print("Tem ninguem nao truta")url
+            #print("Momento em que nenhum alvo foi reconhecido")
             
             if(cache!=None):
-                #print("Ja teve alguem mas sumiu")
+                #print("Alvo perdido")
                 coordenadas = (cache[0], cache[1], cache[2], cache[3])
                
                 obj_teste.start_tracking(frame, coordenadas)
@@ -95,9 +110,12 @@ while True:
                     # direction = rectAndDirect[1]
                     #arduino.sendArduino(rectangle)
                     #arduino.sendArduino(direction)
+            
+            elif(sentry.getStatus()==0):
+                sentry.start_sentry_mode(frame)
         
         else:
-            #print("Achei alguem aqui")
+            #print("Possivel alvo encontrado")
 
             for face_encoding in face_encodings:
 
@@ -116,8 +134,13 @@ while True:
                 best_match_index = np.argmin(face_distances)
 
                 if matches[best_match_index]:
+                    #print("Alvo encontrado")
+
+                    if(sentry.getStatus()==1):
+                        sentry.stop_sentry_mode()
+
                     name = known_face_names[best_match_index]
-                    
+
                     top = face_locations[0][0]
                     right = face_locations[0][1]
                     bottom = face_locations[0][2]
@@ -127,23 +150,28 @@ while True:
                     right *= 4
                     bottom *= 4
                     left *= 4
+
                     #Send 
                     rectAndDirect = SLR.conditions([top, right, bottom, left], lista_ret) 
+
                     if rectAndDirect is not None:
+
                         rectangle_1 = rectAndDirect[0][0]
                         direction_1 = rectAndDirect[0][1]
+
                         if len(rectAndDirect) == 2: 
+
                             rectangle_2 = rectAndDirect[1][0]
-                            direction_2 = rectAndDirect[1][1]     
+                            direction_2 = rectAndDirect[1][1]    
+
                     #arduino.sendArduino(rectangle)
                     #arduino.sendArduino(direction)
 
                     cache = None
                     cache = [left, top, right*0.5, bottom*0.5]
-
                     coordenadas = None
+
                     obj_teste.stop_tracking()
-            
 
                 face_names.append(name)
 
@@ -173,7 +201,7 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('q'):
         obj_teste.stop_tracking()
         break
-
+    
 # Release handle to the webcam
 video_capture.release()
 cv2.destroyAllWindows()

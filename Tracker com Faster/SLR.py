@@ -40,7 +40,7 @@ def criaRet(altura, largura, cor, frame_process, vel):  #Cria um retângulo de a
 
     pL = [cima*(-1), direita, baixo, esquerda*(-1)] #Ponto p0 do retângulo em formato de lista
 
-    cv2.rectangle(frame_process, p0, p1, cor, 1) #Escreve o retângulo
+    cv2.rectangle(frame_process, p0, p1, cor, 1) #Escreve o retânguloz
 
     ret = [pL, vel] #Cria vetor Retângulo que contem os pontos formadores e a velocidade
 
