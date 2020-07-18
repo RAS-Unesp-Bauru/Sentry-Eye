@@ -17,6 +17,6 @@ def sendArduino(direcao, retangulo, jump_booster):
 
     print(string)
 
-    #arduino = serial.Serial(port='/dev/ttyACM0', baudrate=9600, timeout=1)    # open serial port
-    #arduino.write(bytes(string, encoding='utf-8'))                            # escreve uma string
-    #arduino.close() 
+    arduino = serial.Serial(port='/dev/ttyACM0', baudrate=9600, timeout=1)    # open serial port
+    arduino.write(bytes(string, encoding='utf-8'))                            # escreve uma string
+    arduino.close() 

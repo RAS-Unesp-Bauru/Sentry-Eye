@@ -35,26 +35,26 @@ void loop(){
       	//Serial.println(direcao);
       	//Serial.println(jump);
 
-        if(direcao == 't'){ // Centralizando para cima
+        if(direcao == 't' && pos_height < 180 - jump){ // Centralizando para cima
             pos_height += jump;
           	servo_height.write(pos_height);
             Serial.println(pos_height);
         	  direcao = 'n';
         }
       
-        if(direcao == 'b'){ // Centralizando para baixo
+        if(direcao == 'b' && pos_height > jump){ // Centralizando para baixo
           	pos_height -= jump;  
          	  servo_height.write(pos_height);
             Serial.println(pos_height);
             direcao = 'n';
         }
-        if(direcao == 'r'){ // Centralizando para direita
+        if(direcao == 'r' && pos_width < 180 - jump){ // Centralizando para direita
           	pos_width += jump;  
           	servo_width.write(pos_width);
             Serial.println(pos_width);
             direcao = 'n';
         }
-        if(direcao == 'l'){ // Centralizando para esquerda
+        if(direcao == 'l' && pos_width > jump){ // Centralizando para esquerda
             pos_width -= jump;
           	servo_width.write(pos_width); 
             Serial.println(pos_width);
