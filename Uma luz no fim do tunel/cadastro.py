@@ -6,23 +6,23 @@ import cv2
 class Cadastro:
     def __init__ (self):
         self.dir = dir
-        self.nome = input('Digite seu nome para o cadastro: ')
+        self.nome = input('Please, enter your name for registration: ')
 
     def criar_pasta(self):                  # Criação da pasta de cadastro.
-        if not os.path.exists('cadastro'):  # Confere se a pasta já existe.
-            os.mkdir('cadastro')
-            print("A pasta foi criada com sucesso!")
-        self.dir = 'cadastro'
+        if not os.path.exists('records'):  # Confere se a pasta já existe.
+            os.mkdir('records')
+            print("The folder was created successfully!")
+        self.dir = 'records'
 
     def tirar_foto(self, video_ou_webcam):  # Captura da imagem do usuário.
         nome_foto = self.nome + '.png'      # Nomeia imagem com o nome do usuário.
         self.dir += '/' + nome_foto         # Salva o diretório da captura.
 
         if os.path.exists(self.dir):        # Se o usuário já for cadastrado, não fará novamente. 
-            print('Você já está cadastrado.')
+            print('You are already registered.')
 
         else:
-            print('Você não está cadastrado, faça agora!')
+            print('You are not registered, do it now!')
 
             # A captura pode ser feita por webcam (0) ou vídeo (1).
 
@@ -38,11 +38,11 @@ class Cadastro:
                     check, frame = cap.read()
                     cv2.imshow("Capturando", frame)
                     key = cv2.waitKey(1)
-                    print("Pressione a tecla S para tirar a foto.")
+                    print("Press the S key to take the photo.")
                     if key == ord('s'):         # Realiza a captura pressionando a tecla "S"
                         cv2.imwrite(filename=self.dir, img=frame)
                         cap.release()
-                        print("Foto salva!")
+                        print("Photo saved!")
                         break
                     
                     elif key == ord('q'):
