@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://sites.google.com/unesp.br/rasunespbauru/home">
-    <img src="https://lh6.googleusercontent.com/7MGu9_sdcTjHhBAZVLiFCo9OxALf8q2HeRyYoJAQgP-ikL6gg89vl_GHcY3cHynIv-5H-D8=w16383" alt="RAS logo" width="500" height="140">
+    <img src="https://user-images.githubusercontent.com/50799373/88114032-6396b280-cb89-11ea-9de9-656eb9bc2d31.png" alt="RAS logo" width="500" height="140">
   </a>
 </p>
 
@@ -43,7 +43,15 @@ If the registered target is lost, the program will run the object tracking mecha
 ### Requirements
 
 The project was constructed in machines with Linux Ubuntu 16.04 LTS and superior. Alongside the following:
-- 1
+- Python 3.x or above;
+- face_recognition
+- cv2
+- numpy
+- threading
+- serial
+-
+-
+-
 
 
 ### Steps:
