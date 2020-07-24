@@ -39,6 +39,8 @@ if speed == 'f':
 
 print("You chose the {} velocity".format(speed))
 
+arduino_connection = arduino.createConnection('/dev/ttyACM0')
+
 pessoa1 = Cadastro()
 pessoa1.criar_pasta()
 pessoa1.tirar_foto(0) # webcam = 0 / video = 1
@@ -144,14 +146,14 @@ while True:
                             direction_1 = rectAndDirect[0][1]
                             # print("Direção: ", direction_1)
 
-                            arduino.sendArduino(direction_1, rectangle_1, jump_booster)
+                            arduino.sendArduino(arduino_connection, direction_1, rectangle_1, jump_booster)
 
                             if len(rectAndDirect) == 2: 
 
                                 rectangle_2 = rectAndDirect[1][0]
                                 direction_2 = rectAndDirect[1][1] 
 
-                                arduino.sendArduino(direction_2, rectangle_2, jump_booster) 
+                                arduino.sendArduino(arduino_connection, direction_2, rectangle_2, jump_booster) 
 
             
             elif(sentry.getStatus()==0):
@@ -208,14 +210,14 @@ while True:
                         direction_1 = rectAndDirect[0][1]
                         # print("Direção: ", direction_1)
 
-                        arduino.sendArduino(direction_1, rectangle_1, jump_booster)
+                        arduino.sendArduino(arduino_connection, direction_1, rectangle_1, jump_booster)
 
                         if len(rectAndDirect) == 2: 
 
                             rectangle_2 = rectAndDirect[1][0]
                             direction_2 = rectAndDirect[1][1] 
 
-                            arduino.sendArduino(direction_2, rectangle_2, jump_booster)   
+                            arduino.sendArduino(arduino_connection, direction_2, rectangle_2, jump_booster)   
 
                     cache = None
                     cache = [left, top, right*0.5, bottom*0.5]
@@ -252,6 +254,7 @@ while True:
         break
     
 # Release handle to the webcam
+arduino.closeConnection(arduino_connection)
 video_capture.release()
 cv2.destroyAllWindows()
 

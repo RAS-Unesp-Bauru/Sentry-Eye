@@ -1,7 +1,11 @@
 import serial 
 
-def sendArduino(direcao, retangulo, jump_booster):
+def createConnection(url):
+    connection = serial.Serial(port=url, baudrate=9600, timeout=1)    # open serial port
+    connection.flush()
+    return connection
 
+def sendArduino(connection, direcao, retangulo, jump_booster):
     jump = 0
 
     if retangulo == 0:
@@ -13,10 +17,12 @@ def sendArduino(direcao, retangulo, jump_booster):
     if retangulo == 2:
         jump = 3*jump_booster
     
-    string = "%s%s" % (direcao, jump)
+    data_string = "%s%s" % (direcao, jump)
+    
+    print(data_string)
 
-    print(string)
+    connection.write(bytes(data_string, encoding='utf-8')) # send a string to arduino
+    connection.flush()                            
 
-    arduino = serial.Serial(port='/dev/ttyACM0', baudrate=9600, timeout=1)    # open serial port
-    arduino.write(bytes(string, encoding='utf-8'))                            # escreve uma string
-    arduino.close() 
+def closeConnection(connection):
+    connection.close() 

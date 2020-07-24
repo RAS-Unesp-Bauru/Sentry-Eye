@@ -10,7 +10,6 @@ int pos_width;    // Variável de posição na horizontal
 int pos_height;   // Variável de posição na vertical
 int jump;
 char direcao;
-String string;
 
 void setup(){
   Serial.begin(9600);      // Velocidade padrão para comunicação
@@ -22,16 +21,15 @@ void setup(){
   pos_width = pos_height = 90;
   jump = 0;
   direcao = 5;
-  string = "";
 }
 
 void loop(){
     
     if (Serial.available() > 0){
       
-        string = Serial.readString();
-        direcao = string.charAt(0);
-        jump =  string.charAt(1) - 48;
+        String data_string = Serial.readString();
+        direcao = data_string.charAt(0);
+        jump =  data_string.charAt(1) - 48;
       	//Serial.println(direcao);
       	//Serial.println(jump);
 
