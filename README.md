@@ -40,19 +40,28 @@ If the registered target is lost, the program will run the object tracking mecha
 
 
 ## Installation
+
+### Recommended
+
+It's recommended to install Anaconda.
+- How to install Anaconda in Ubuntu.
+
 ### Requirements
 
 The project was constructed in machines with Linux Ubuntu 16.04 LTS and superior. Alongside the following:
-- Python 3.x or above;
-- face_recognition
-- cv2
-- numpy
-- threading
-- serial
--
--
--
 
+#### Python 3.x or above
+#### face_recognition
+#### cv2
+
+```
+pip install opencv-python
+pip install opencv-contrib-python
+```
+#### numpy
+#### threading
+#### serial
+#### os
 
 ### Steps:
 1. One
