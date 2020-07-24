@@ -30,8 +30,8 @@ void loop(){
         String data_string = Serial.readString();
         direcao = data_string.charAt(0);
         jump =  data_string.charAt(1) - 48;
-      	//Serial.println(direcao);
-      	//Serial.println(jump);
+      	Serial.println(direcao);
+      	Serial.println(jump);
 
         if(direcao == 't' && pos_height < 180 - jump){ // Centralizando para cima
             pos_height += jump;
