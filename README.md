@@ -8,7 +8,7 @@
 Track a specifc person in the camera motion range by their face characteristics, if its lost, an object tracking mechanism is activated with the same coordinates as the last known face position. Built upon "**ageitgey**" *face_recognition* neural network.
 
 ## Introduction
-The project Sentry eye is a IEEE RAS Unesp Bauru's proposal to develop a camera that is capable of moving in all cartesian axis while searching a previous registered person, named as "target". The user is requested to take a photo with the camera and will be registered in doing so, then he will be asked to chose between three values of velocity, small, medium or fast, that will change the "softness" of the camera's movement. After that, delimiters for the face position will be created and will act as a response for the target getting to the sides, farther or closer to the camera's visual range. If it identifies the face, the camera will start to follow the target by utilizing the delimiters response, if it doesnt find it, it will start to move left and right in a sentry iddle mode.
+The project Sentry eye is a IEEE RAS Unesp Bauru's proposal to develop a camera that is capable of moving in all cartesian axis while searching a previous registered person, named as "target". The user is requested to take a photo with the camera and will be registered in doing so, then he will be asked to chose between three values of velocity, small, medium or fast, that will change the "softness" of the camera's movement. After that, delimiters for the face position will be created and will act as a response for the target getting to the sides, farther or closer to the camera's visual range. If it identifies the face, the camera will start to follow the target by utilizing the delimiters response, if the face is obstructed or the person turn around, a object tracking algorithm will take place and, if it doesnt find it, it will start to move left and right in a sentry iddle mode.
 
 The project's base ideia came from the haunted paintings present in animated shows, where it follows the protagonists when they walk nearby, and from the sentry turrets present in the game Portal 2. although the idea originally came from a comic perspective it was possible to see real life aplication, like permiting the camera to adjust the image of a professor doing lecture, removing the need for a operator always moving and positioning the best view angle.  
 
@@ -46,38 +46,66 @@ If the registered target is lost, the program will run the object tracking mecha
 It's recommended to install Anaconda.
 - How to install Anaconda in Ubuntu.
 
+1. Create an environment with python 3.7
+```
+conda create -n repositoryName python==3.7.0
+```
+2. Then activate it
+```
+conda activate repositoryName
+```
+
 ### Requirements
 
 The project was constructed in machines with Linux Ubuntu 16.04 LTS and superior. Alongside the following:
 
-#### Python 3.x or above
-#### face_recognition
-#### cv2
+#### Python 3.7 and above
+#### Git
+**linux**:
+
+Firstly, check if apt is up-to-date
+```
+sudo apt-get update
+```
+Then install git with the following command
+```
+sudo apt-get install git-all
+```
+#### face_recognition 1.3.0
+
+```
+pip install face-recognition
+```
+#### OpenCV 4.1.0
 
 ```
 pip install opencv-python
 pip install opencv-contrib-python
 ```
-#### numpy
-#### threading
-#### serial
-#### os
+#### Numpy 1.18.1
+Usually comes with OpenCV, but you can also install with
+```
+pip install numpy
+```
+#### Pyserial 3.4
+```
+pip install pyserial
+``` 
 
-### Steps:
-1. One
-2. Two
-3. Three
+### Steps for execution:
+1. Clone this repository
+```
+git clone https://github.com/Adribom/Mechanical-Tracking-Eye
+```
 
-## Cheap camera building option
-### Materias:
-* X
-* Y
-* Z
+2. Run `faster_cameraREC.py`, located inside the XXX folder
+```
+python3 faster_cameraREC.py
+```
 
-### Building:
-1. One
-2. Two 
-3. Three
+
+## Hardware
+Check this pdf over here :)
 
 ## Conclusion
 **Conluido**
@@ -87,7 +115,7 @@ This project is part of RAS's branches, specifically, a Bauru RAS's project with
 
 ### Team
 
-> RAS Unesp Bauru
+> Sentry Eye
 
 | <a href="https://github.com/Adribom" target="_blank">**Adriel Bombonato (Scrum Master)**</a> | <a href="https://github.com/paulo-gigliotti" target="_blank">**Paulo Gigliotti**</a> | <a href="https://github.com/ViniPilan" target="_blank">**Vinicius Pilan**</a> |
 | :---: |:---:| :---:|
