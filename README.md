@@ -43,16 +43,17 @@ If the registered target is lost, the program will run the object tracking mecha
 
 ### Recommended
 
-It's recommended to install Anaconda.
-- How to install Anaconda in Ubuntu.
+#### Anaconda
+We recommend that you use Anaconda for organization purposes
+- [How to install Anaconda on Linux, MacOS and Windows](https://github.com/Adribom/Mechanical-Tracking-Eye/blob/readme/installing-anaconda.md).
 
-1. Create an environment with python 3.7
+Then, create an environment with python 3.7
 ```
-conda create -n repositoryName python==3.7.0
+conda create -n envName python==3.7.0
 ```
-2. Then activate it
+And activate it
 ```
-conda activate repositoryName
+conda activate envName
 ```
 
 ### Requirements
@@ -61,16 +62,35 @@ The project was constructed in machines with Linux Ubuntu 16.04 LTS and superior
 
 #### Python 3.7 and above
 #### Git
-**linux**:
+- **Linux**:
 
-Firstly, check if apt is up-to-date
-```
-sudo apt-get update
-```
-Then install git with the following command
-```
-sudo apt-get install git-all
-```
+  1. check if apt is up-to-date
+  ```
+  sudo apt-get update
+  ```
+  2. Then install git with the following command
+  ```
+  sudo apt-get install git-all
+  ```
+- **MacOS**:
+
+  Most versions already come with git, but if you dont have it installed follow this steps
+
+  1. Navigate to the latest [macOS Git Installer](https://sourceforge.net/projects/git-osx-installer/files/git-2.23.0-intel-universal-mavericks.dmg/download?use_mirror=autoselect) and download the latest version.
+  2. Once the installer has started, follow the instructions as provided until the installation is complete.
+  3. Open the command prompt "terminal" and type git version to verify Git was installed.
+
+- **Windows**:
+  1. Navigate to the latest [Git for Windows installer](https://gitforwindows.org/) and download the latest version.
+
+  2. Once the installer has started, follow the instructions as provided in the **Git Setup** wizard screen until the installation is complete.
+
+  3. Open the windows command prompt (or **Git Bash** if you selected not to use the standard Git Windows Command Prompt during the Git installation).
+
+  4. Type git version to verify Git was installed.
+
+More information [here](https://github.com/git-guides/install-git)
+
 #### face_recognition 1.3.0
 
 ```
