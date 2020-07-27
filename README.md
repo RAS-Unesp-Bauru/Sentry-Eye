@@ -8,7 +8,7 @@
 Track a specifc person in the camera motion range by their face characteristics, if its lost, an object tracking mechanism is activated with the same coordinates as the last known face position. Built upon "**ageitgey**" *face_recognition* neural network.
 
 ## Introduction
-The project Sentry eye is a IEEE RAS Unesp Bauru's proposal to develop a camera that is capable of moving in all cartesian axis while searching a previous registered person, named as "target". The user is requested to take a photo with the camera and will be registered in doing so, then he will be asked to chose between three values of velocity, small, medium or fast, that will change the "softness" of the camera's movement. After that, delimiters for the face position will be created and will act as a response for the target getting to the sides, farther or closer to the camera's visual range. If it identifies the face, the camera will start to follow the target by utilizing the delimiters response, if the face is obstructed or the person turn around, a object tracking algorithm will take place and, if it doesnt find it, it will start to move left and right in a sentry iddle mode.
+The project Sentry eye is a IEEE RAS Unesp Bauru's proposal to develop a camera that is capable of moving in all cartesian axis while searching a previous registered person, named as "target". The user is requested to take a photo with the camera and will be registered in doing so, then he will be asked to chose between three values of velocity, small, medium or fast, that will change the "softness" of the camera's movement. After that, delimiters for the face position will be created and will act as a response for the target getting to the sides, farther or closer to the camera's visual range. If it identifies the face, the camera will start to follow the target by utilizing the delimiters response, if the face is obstructed or the person turn around, a object tracking algorithm will take place and, if neither is activated, it will start to move left and right in a sentry iddle mode.
 
 The project's base ideia came from the haunted paintings present in animated shows, where it follows the protagonists when they walk nearby, and from the sentry turrets present in the game Portal 2. although the idea originally came from a comic perspective it was possible to see real life aplication, like permiting the camera to adjust the image of a professor doing lecture, removing the need for a operator always moving and positioning the best view angle.  
 
@@ -29,12 +29,12 @@ The gif above show the process of creating a new folder records end registering 
 
 
 ### Track registered target(s) with face recognition:
-![part1](https://user-images.githubusercontent.com/50799373/87965162-b2612100-ca91-11ea-9ddf-b13c0c44826b.gif)
+![faceRec](https://user-images.githubusercontent.com/50799373/88597213-232dad80-d03d-11ea-9b07-23785beb1bba.gif)
 
 With registration set, the program will start to run firstly the face recognition funtion and compare the targets position with the delimeters coordinates. If the positions intersect, a response will come out as a print in the terminal or as a servo movement, if you have the hardware functioning.
 
 ### Track registered target(s) with Object Tracking:
-![part2](https://user-images.githubusercontent.com/50799373/87966271-6c0cc180-ca93-11ea-8423-ddd048a7a9d9.gif)
+![objTracking](https://user-images.githubusercontent.com/50799373/88597653-19f11080-d03e-11ea-9929-7441fe0c8c1e.gif)
 
 If the registered target is lost, the program will run the object tracking mechanism, that will use the last known face position as a new object to be tracked, this helps compensate some situations where the face recognition underperforms. The delimiters continue to interact with the current target coordinates to generate a response.   
 
