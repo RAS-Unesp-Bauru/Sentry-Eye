@@ -6,6 +6,7 @@ import SLR
 import threading
 import serial
 from teste_sentry import Sentry
+from imutils.video import FPS
 from cadastro import Cadastro
 from setSpeed import SetSpeed
 import arduino

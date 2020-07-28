@@ -8,7 +8,7 @@
 Track a specifc person in the camera motion range by their face characteristics, if its lost, an object tracking mechanism is activated with the same coordinates as the last known face position. Built upon "**ageitgey**" *face_recognition* neural network.
 
 ## Introduction
-The project Sentry eye is a IEEE RAS Unesp Bauru's proposal to develop a camera that is capable of moving in all cartesian axis while searching a previous registered person, named as "target". The user is requested to take a photo with the camera and will be registered in doing so, then he will be asked to chose between three values of velocity, small, medium or fast, that will change the "softness" of the camera's movement. After that, delimiters for the face position will be created and will act as a response for the target getting to the sides, farther or closer to the camera's visual range. If it identifies the face, the camera will start to follow the target by utilizing the delimiters response, if the face is obstructed or the person turn around, a object tracking algorithm will take place and, if neither is activated, it will start to move left and right in a sentry iddle mode.
+The project Sentry eye is a IEEE RAS Unesp Bauru's proposal to develop a camera that is capable of moving in all cartesian axis while searching a previous registered person, named as "target". The user is requested to take a photo with the camera and will be registered in doing so, then he will be asked to chose between three values of velocity, small, medium or fast, that will change the "softness" of the camera's movement. After that, delimiters for the face position will be created and will act as a response for the target getting to the sides, farther or closer to the camera's visual range. If it identifies and recognize the face, the camera will start to follow the target by utilizing the delimiters response, if the face is obstructed or the person turn around, a object tracking algorithm will take place and, if neither is activated, it will start to move left and right in a sentry iddle mode.
 
 The project's base ideia came from the haunted paintings present in animated shows, where it follows the protagonists when they walk nearby, and from the sentry turrets present in the game Portal 2. although the idea originally came from a comic perspective it was possible to see real life aplication, like permiting the camera to adjust the image of a professor doing lecture, removing the need for a operator always moving and positioning the best view angle.  
 
@@ -91,11 +91,13 @@ The project was constructed in machines with Linux Ubuntu 16.04 LTS and superior
 
 More information [here](https://github.com/git-guides/install-git)
 
-#### face_recognition 1.3.0
+#### face-recognition 1.3.0
 
 ```
 pip install face-recognition
 ```
+
+>Note: it may take a while
 #### OpenCV 4.1.0
 
 ```
@@ -103,9 +105,13 @@ pip install opencv-python
 pip install opencv-contrib-python
 ```
 #### Numpy 1.18.1
-Usually comes with OpenCV, but you can also install with
+Usually comes with face-recognition or OpenCV, but you can also install with
 ```
 pip install numpy
+```
+#### Imutils 0.5.3
+```
+pip install imutils
 ```
 #### Pyserial 3.4
 ```
@@ -120,15 +126,14 @@ git clone https://github.com/Adribom/Mechanical-Tracking-Eye
 
 2. Run `faster_cameraREC.py`, located inside the XXX folder
 ```
-python3 faster_cameraREC.py
+python faster_cameraREC.py
 ```
+>Note: If the error `Gtk-Message: Failed to load module "canberra-gtk-module"` appear, enter `sudo apt-get install libcanberra-gtk-module`
+
 
 
 ## Hardware
 Check this pdf over here :)
-
-## Conclusion
-**Conluido**
 
 ## Infos
 This project is part of RAS's branches, specifically, a Bauru RAS's project with the intend to help the reasearch area with new ideias and, consequently, develop it's members ability to work with modern robotic and automation problems.
