@@ -3,6 +3,7 @@
     <img src="https://user-images.githubusercontent.com/50799373/88114032-6396b280-cb89-11ea-9de9-656eb9bc2d31.png" alt="RAS logo" width="500" height="140">
   </a>
 </p>
+<img width="2240" alt="Artboard 1sentry-eye" src="https://user-images.githubusercontent.com/50799373/88680061-7ac42b80-d0c6-11ea-8571-937653f87852.png">
 
 # Mechanical-Tracking-Eye
 Track a specifc person in the camera motion range by their face characteristics, if its lost, an object tracking mechanism is activated with the same coordinates as the last known face position. Built upon "**ageitgey**" *face_recognition* neural network.
