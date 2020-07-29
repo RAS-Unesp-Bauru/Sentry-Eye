@@ -24,6 +24,7 @@ import arduino
 jump_booster = 0
 jump = 0
 string_arduino = ""
+url_arduino = '/dev/ttyUSB0'
 
 option1 = SetSpeed()
 speed = option1.get_speed()
@@ -38,8 +39,6 @@ if speed == 'f':
     jump_booster = 3
 
 print("You chose the {} velocity".format(speed))
-
-arduino_connection = arduino.createConnection('/dev/ttyACM0')
 
 pessoa1 = Cadastro()
 pessoa1.criar_pasta()
@@ -146,14 +145,14 @@ while True:
                             direction_1 = rectAndDirect[0][1]
                             # print("Direção: ", direction_1)
 
-                            arduino.sendArduino(arduino_connection, direction_1, rectangle_1, jump_booster)
+                            arduino.sendArduino(url_arduino, direction_1, rectangle_1, jump_booster)
 
                             if len(rectAndDirect) == 2: 
 
                                 rectangle_2 = rectAndDirect[1][0]
                                 direction_2 = rectAndDirect[1][1] 
 
-                                arduino.sendArduino(arduino_connection, direction_2, rectangle_2, jump_booster) 
+                                arduino.sendArduino(url_arduino, direction_2, rectangle_2, jump_booster) 
 
             
             elif(sentry.getStatus()==0):
@@ -210,14 +209,14 @@ while True:
                         direction_1 = rectAndDirect[0][1]
                         # print("Direção: ", direction_1)
 
-                        arduino.sendArduino(arduino_connection, direction_1, rectangle_1, jump_booster)
+                        arduino.sendArduino(url_arduino, direction_1, rectangle_1, jump_booster)
 
                         if len(rectAndDirect) == 2: 
 
                             rectangle_2 = rectAndDirect[1][0]
                             direction_2 = rectAndDirect[1][1] 
 
-                            arduino.sendArduino(arduino_connection, direction_2, rectangle_2, jump_booster)   
+                            arduino.sendArduino(url_arduino, direction_2, rectangle_2, jump_booster)   
 
                     cache = None
                     cache = [left, top, right*0.5, bottom*0.5]
@@ -254,7 +253,6 @@ while True:
         break
     
 # Release handle to the webcam
-arduino.closeConnection(arduino_connection)
 video_capture.release()
 cv2.destroyAllWindows()
 

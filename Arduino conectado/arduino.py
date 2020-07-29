@@ -1,16 +1,7 @@
 import serial 
 
-def createConnection(url):
 
-    try:
-        connection = serial.Serial(port=url, baudrate=9600, timeout=1)    # open serial port
-        connection.flush()
-        return connection
-    finally:
-        print("Connection Error!")
-        return None
-
-def sendArduino(connection, direcao, retangulo, jump_booster):
+def sendArduino(url, direcao, retangulo, jump_booster):
     jump = 0
 
     if retangulo == 0:
@@ -26,10 +17,8 @@ def sendArduino(connection, direcao, retangulo, jump_booster):
     
     print(data_string)
 
-    if connection is not None:    
-        connection.write(bytes(data_string, encoding='utf-8')) # send a string to arduino
-        connection.flush()                            
 
-def closeConnection(connection):
-    if connection is not None:
-        connection.close() 
+    connection = serial.Serial(port=url, baudrate=9600, timeout=1)    # open serial port
+    connection.flush()
+    connection.write(bytes(data_string, encoding='utf-8')) # send a string to arduino
+    connection.close()                                        
