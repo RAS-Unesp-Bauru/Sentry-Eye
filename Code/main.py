@@ -219,6 +219,9 @@ while True:
 
                             arduino.sendArduino(arduino_connection, direction_2, rectangle_2, jump_booster)   
 
+                        elif len(rectAndDirect) == 3:
+                            pass
+
                     cache = None
                     cache = [left, top, right*0.5, bottom*0.5]
                     coordinates = None
