@@ -1,17 +1,17 @@
 import serial 
 
-def createConnection(url):
+def createConnection(url): # Creates connection with the serial port of arduino.
     print("Trying to connect with Arduino...")
     try:
-        connection = serial.Serial(port=url, baudrate=9600, timeout=1)    # open serial port
+        connection = serial.Serial(port=url, baudrate=9600, timeout=1) # Open serial port.
         connection.flush()
         print("Arduino connection was successful!")
         return connection
-    finally:
+    except:
         print("Arduino connection Error!")
         return None
 
-def sendArduino(connection, direction, rectangle, jump_booster):
+def sendArduino(connection, direction, rectangle, jump_booster): # Sends the data for arduino.
     jump = 0
 
     if rectangle == 0:
@@ -28,9 +28,9 @@ def sendArduino(connection, direction, rectangle, jump_booster):
     print(data_string)
 
     if connection is not None:    
-        connection.write(bytes(data_string, encoding='utf-8')) # send a string to arduino
+        connection.write(bytes(data_string, encoding='utf-8')) # Send a string to arduino.
         connection.flush()                            
 
-def closeConnection(connection):
+def closeConnection(connection): # Closes the connection with arduino.
     if connection is not None:
         connection.close() 
