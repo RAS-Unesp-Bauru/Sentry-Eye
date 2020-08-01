@@ -31,6 +31,11 @@ def sendArduino(connection, direction, rectangle, jump_booster): # Sends the dat
         connection.write(bytes(data_string, encoding='utf-8')) # Send a string to arduino.
         connection.flush()                            
 
+def setServoInCenter(connection):
+    if connection is not None:    
+        connection.write(bytes('center', encoding='utf-8')) # Send a string to arduino.
+        connection.flush() 
+
 def closeConnection(connection): # Closes the connection with arduino.
     if connection is not None:
         connection.close() 
