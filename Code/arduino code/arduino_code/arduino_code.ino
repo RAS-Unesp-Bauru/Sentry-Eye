@@ -29,7 +29,7 @@ void loop(){
       
         String data_string = Serial.readString();
 
-        if (data_string == 'zero'){
+        if (data_string == "zero"){
           servo_width.write(90);     // Posição padrão setado em 90 graus (no meio)
           servo_height.write(90);
 

@@ -40,7 +40,7 @@ if speed == 'f':
 print("You chose the {} velocity".format(speed))
 
 arduino_connection = arduino.createConnection('COM5') # Change it for your port here.
-arduino.setServoInCenter(arduino_connection)
+setServoInCenter(arduino_connection)
 
 person1 = Registration()
 person1.create_file()
@@ -72,7 +72,8 @@ face_names = []
 process_this_frame = True
 cache = None 
 
-sentry = Sentry(20, arduino_connection) #The first argumment here is the sentry jump
+sentry = Sentry(15)
+sentry.start()
 
 tracker = cv2.TrackerKCF_create()
 tracker_flag = 0
@@ -81,11 +82,9 @@ while True:
     # Grab a single frame of video
     print("\n")
     ret, frame = video_capture.read()
-
+    
     fps.update()
     fps.stop()
-
-    sentry.setFrame(frame)
     
     cv2.putText(frame, "FPS: {:.2f}".format(fps.fps()), (31, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
 
@@ -128,9 +127,6 @@ while True:
                     (success, box) = tracker.update(frame)
 
                     if success:
-
-                        sentry.stop_sentry_mode()
-
                         (left_tracker, top_tracker, w, h) = [int (v) for v in box]
                         
                         right_tracker = left_tracker + h
@@ -159,16 +155,16 @@ while True:
                                 direction_2 = rectAndDirect[1][1] 
 
                                 arduino.sendArduino(arduino_connection, direction_2, rectangle_2, jump_booster) 
-                    
-                    elif not success:
-                        if(sentry.getStatus()==0):
-                            sentry.startTimer()
 
+            
+            elif(sentry.getStatus()==0):
+                sentry.start_sentry_mode(frame)
         
         else:
             #print("Possible target acquired")
 
-            sentry.stop_sentry_mode()
+            if(sentry.getStatus()==0):
+                sentry.start_sentry_mode(frame)
 
             for face_encoding in face_encodings:
 
@@ -188,6 +184,9 @@ while True:
 
                 if matches[best_match_index]:
                     #print("Target found.")
+
+                    if(sentry.getStatus()==1):
+                        sentry.stop_sentry_mode()
 
                     name = known_face_names[best_match_index]
 
@@ -221,6 +220,9 @@ while True:
 
                             arduino.sendArduino(arduino_connection, direction_2, rectangle_2, jump_booster)   
 
+                        elif len(rectAndDirect) == 3:
+                            pass
+
                     cache = None
                     cache = [left, top, right*0.5, bottom*0.5]
                     coordinates = None
@@ -252,11 +254,11 @@ while True:
 
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord('q'):
+        #obj_teste.stop_tracking()
         break
     
 # Release handle to the webcam
 arduino.closeConnection(arduino_connection)
-sentry.stop_sentry_mode()
 video_capture.release()
 cv2.destroyAllWindows()
 
