@@ -125,7 +125,7 @@ pip install pyserial
 git clone https://github.com/Adribom/Mechanical-Tracking-Eye
 ```
 
-2. Run `faster_cameraREC.py`, located inside the XXX folder
+2. Run `faster_cameraREC.py`, located inside the Code folder
 ```
 python faster_cameraREC.py
 ```
