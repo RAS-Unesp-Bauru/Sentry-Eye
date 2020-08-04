@@ -37,7 +37,11 @@ With registration set, the program will start to run firstly the face recognitio
 ### Track registered target(s) with Object Tracking:
 ![objTracking](https://user-images.githubusercontent.com/50799373/88597653-19f11080-d03e-11ea-9929-7441fe0c8c1e.gif)
 
-If the registered target is lost, the program will run the object tracking mechanism, that will use the last known face position as a new object to be tracked, this helps compensate some situations where the face recognition underperforms. The delimiters continue to interact with the current target coordinates to generate a response.   
+If the registered target is lost, the program will run the object tracking mechanism, that will use the last known face position as a new object to be tracked, this helps compensate some situations where the face recognition underperforms. The delimiters continue to interact with the current target coordinates to generate a response. 
+
+### Sentry iddle mode when both algorithms doesn't find the target:
+
+A countdown will start if both trackers lose the target, when that countdown reaches zero, the camera will begin to move left and right looking for the target. This movement cicle will repeat until the target is found again.
 
 
 ## Installation
@@ -125,7 +129,7 @@ pip install pyserial
 git clone https://github.com/Adribom/Mechanical-Tracking-Eye
 ```
 
-2. Run `faster_cameraREC.py`, located inside the Code folder
+2. Run `faster_cameraREC.py`, located inside the *Code* folder
 ```
 python faster_cameraREC.py
 ```
