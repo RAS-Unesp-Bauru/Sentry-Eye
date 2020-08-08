@@ -31,7 +31,7 @@ void loop(){
     
     if (Serial.available() > 0){
       
-        String data_string = Serial.readString();
+        String data_string = Serial.readStringUntil('\n');
 
         if (data_string == "center"){
           servo_width.write(90);     // Posição padrão setado em 90 graus (no meio)

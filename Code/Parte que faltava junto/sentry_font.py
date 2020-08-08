@@ -40,7 +40,7 @@ class Sentry():
             #print("Jump = ", self.jump)
             #print("First while  - X = ", coord)
             
-            data_string = 'l%d-0' % (self.jump//10)
+            data_string = 'l%d-0\n' % (self.jump//10)
             print("Send to Arduino (x = ", coord, "): ", data_string)
             print('\n')
 
@@ -53,7 +53,7 @@ class Sentry():
             coord -= self.jump
             #print("Second while - X = ", coord)
 
-            data_string = 'r%d-0' % (self.jump//10)
+            data_string = 'r%d-0\n' % (self.jump//10)
             print("Send to Arduino (x = ", coord, "): ", data_string)
             print('\n')
             

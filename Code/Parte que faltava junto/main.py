@@ -39,7 +39,7 @@ if speed == 'f':
 
 print("You chose the {} velocity".format(speed))
 
-arduino_connection = arduino.createConnection('COM5') # Change it for your port here.
+arduino_connection = arduino.createConnection('/dev/ttyUSB0') # Change it for your port here.
 arduino.setServoInCenter(arduino_connection)
 
 person1 = Registration()

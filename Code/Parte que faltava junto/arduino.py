@@ -33,7 +33,7 @@ def sendArduino(connection, direction1, rectangle1, direction2, rectangle2, jump
     if rectangle2 == 2:
         jump2 = 3*jump_booster
     
-    data_string = "%s%s%s%s" % (direction1, jump1, direction2, jump2)
+    data_string = "%s%s%s%s\n" % (direction1, jump1, direction2, jump2)
     
     print("Send to Arduino: ", data_string)
 
@@ -43,7 +43,7 @@ def sendArduino(connection, direction1, rectangle1, direction2, rectangle2, jump
 
 def setServoInCenter(connection):
     if connection is not None:    
-        connection.write(bytes('center', encoding='utf-8')) # Send a string to arduino.
+        connection.write(bytes('center\n', encoding='utf-8')) # Send a string to arduino.
         connection.flush() 
 
 def closeConnection(connection): # Closes the connection with arduino.
