@@ -1,3 +1,4 @@
+from os import system, name
 import face_recognition
 import cv2
 import numpy as np
@@ -21,8 +22,7 @@ import arduino
 # specific demo. If you have trouble installing it, try any of the other demos that don't require it instead.
 
 # Get a reference to webcam #0 (the default one)
-jump_booster = 0
-jump = 0
+jump_booster = 1
 string_arduino = ""
 
 option1 = SetSpeed()
@@ -37,7 +37,7 @@ if speed == 'm':
 if speed == 'f':
     jump_booster = 3
 
-print("You chose the {} velocity".format(speed))
+print("You chose the {} velocity\r".format(speed))
 
 arduino_connection = arduino.createConnection('COM5') # Change it for your port here.
 arduino.setServoInCenter(arduino_connection)
@@ -141,27 +141,16 @@ while True:
                         cv2.rectangle(frame, p1, p2, (0,0,0), 2)
 
                         #Send
-                        rectAndDirect = RBS.conditions([top_tracker, right_tracker, bottom_tracker, left_tracker], rect_list)
+                        rectAndDirect = RBS.conditions([top_tracker, right_tracker, bottom_tracker, left_tracker], rect_list, jump_booster)
+                        print("Velocidade Vertical:{}\n".format(rectAndDirect[0]))
+                        print("Velocidade Horizontal:{}\n".format(rectAndDirect[1]))
+                        #if rectAndDirect is not None:
+                            #print("Rectangle: ", rectangle_1)
 
-                        if rectAndDirect is not None:
+                            #arduino.sendArduino(arduino_connection, rectAndDirect)
 
-                            rectangle_1 = rectAndDirect[0][0]
-                            # print("Rectangle: ", rectangle_1)
-
-                            direction_1 = rectAndDirect[0][1]
-                            # print("Direction: ", direction_1)
-
-                            arduino.sendArduino(arduino_connection, direction_1, rectangle_1, jump_booster)
-
-                            if len(rectAndDirect) == 2: 
-
-                                rectangle_2 = rectAndDirect[1][0]
-                                direction_2 = rectAndDirect[1][1] 
-
-                                arduino.sendArduino(arduino_connection, direction_2, rectangle_2, jump_booster) 
-                    
                     elif not success:
-                        if(sentry.getStatus()==0):
+                        if sentry.getStatus()==0:
                             sentry.startTimer()
 
         
@@ -202,24 +191,13 @@ while True:
                     left *= 4
 
                     #Send
-                    rectAndDirect = RBS.conditions([top, right, bottom, left], rect_list) 
+                    rectAndDirect = RBS.conditions([top, right, bottom, left], rect_list, jump_booster) 
+                    print("Velocidade Vertical:{}\n".format(rectAndDirect[0]))
+                    print("Velocidade Horizontal:{}\n".format(rectAndDirect[1]))
+                    
+                    #if rectAndDirect is not None:
 
-                    if rectAndDirect is not None:
-
-                        rectangle_1 = rectAndDirect[0][0]
-                        # print("Rectangle: ", rectangle_1)
-
-                        direction_1 = rectAndDirect[0][1]
-                        # print("Direction: ", direction_1)
-
-                        arduino.sendArduino(arduino_connection, direction_1, rectangle_1, jump_booster)
-
-                        if len(rectAndDirect) == 2: 
-
-                            rectangle_2 = rectAndDirect[1][0]
-                            direction_2 = rectAndDirect[1][1] 
-
-                            arduino.sendArduino(arduino_connection, direction_2, rectangle_2, jump_booster)   
+                        #arduino.sendArduino(arduino_connection, rectAndDirect, jump_booster)
 
                     cache = None
                     cache = [left, top, right*0.5, bottom*0.5]
@@ -255,7 +233,7 @@ while True:
         break
     
 # Release handle to the webcam
-arduino.closeConnection(arduino_connection)
+#arduino.closeConnection(arduino_connection)
 sentry.stop_sentry_mode()
 video_capture.release()
 cv2.destroyAllWindows()

@@ -77,24 +77,22 @@ def createsRectangleList(rect0, number_of_rectangles, frame_process): # Creates 
 
     return rectangle_list
 
-def conditions(coordenatesTarget, listRectangles): # Check if the target passed in each direction and reactangle
+def conditions(coordenatesTarget, listRectangles, jump_booster): # Check if the target passed in each direction and reactangle
     target = [coordenatesTarget[i]*(-1) if i%3==0 else coordenatesTarget[i] for i in range(4)]
-    positions = {0: 't', 1: 'r', 2: 'b', 3: 'l'} # t = top / r = right / b = bottom / l = left.
+    #positions = {0: 't', 1: 'r', 2: 'b', 3: 'l'} # t = top / r = right / b = bottom / l = left.
     limit_Numbers = len(listRectangles)
-    results = []
-               
+    results = [0, 0, 0 , 0]
     for direction in range(4): # Check in each direction
         for rectangle in range(limit_Numbers-1): # Check in each rectangle
             if listRectangles[rectangle][0][direction] <= target[direction] and listRectangles[rectangle+1][0][direction] > target[direction]:
-                # print('r{}: {}'.format(rectangle, positions.get(direction)))
-                results.append((rectangle, positions.get(direction)))
-
+                results[direction] = rectangle + 1 
             elif listRectangles[limit_Numbers-1][0][direction] == target[direction]:
-                # print('r{}: {}'.format(limit_Numbers - 2, positions.get(direction)))
-                results.append((limit_Numbers - 2, positions.get(direction)))         
-    
+                results.append(limit_Numbers - 2)     
     if results != []: # All the results are inserted in a list, in case the target pass more than one direction.
-        return results   
+        jump = [0, 0]
+        jump[0] = (results[0] - results[2]) * jump_booster
+        jump[1] = (results[1] - results[3]) * jump_booster
+    return jump     
 
      
 

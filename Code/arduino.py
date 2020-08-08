@@ -11,20 +11,14 @@ def createConnection(url): # Creates connection with the serial port of arduino.
         print("Arduino connection Error!")
         return None
 
-def sendArduino(connection, direction, rectangle, jump_booster): # Sends the data for arduino.
-    jump = 0
-
-    if rectangle == 0:
-        jump = 1*jump_booster
-
-    if rectangle == 1:
-        jump = 2*jump_booster
-    
-    if rectangle == 2:
-        jump = 3*jump_booster
-    
-    data_string = "%s%s" % (direction, jump)
-    
+def sendArduino(connection, rectangle): # Sends the data for arduino.
+    for direction in range(2):
+        if rectangle[direction] < 0:
+            rectangle[direction] *= -1
+            rectangle[direction] = '0' + string(rectangle[direction])
+        else:
+            rectangle[direction] = '1' + string(rectangle[direction])
+            data_string = rectangle[0] + rectangle[1] + "\n"
     print(data_string)
 
     if connection is not None:    
