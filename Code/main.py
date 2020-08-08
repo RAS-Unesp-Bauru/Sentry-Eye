@@ -203,7 +203,7 @@ while True:
 
                     #Send
                     rectAndDirect = RBS.conditions([top, right, bottom, left], rect_list) 
-
+                    print(rectAndDirect)
                     if rectAndDirect is not None:
 
                         rectangle_1 = rectAndDirect[0][0]
@@ -259,4 +259,3 @@ arduino.closeConnection(arduino_connection)
 sentry.stop_sentry_mode()
 video_capture.release()
 cv2.destroyAllWindows()
-

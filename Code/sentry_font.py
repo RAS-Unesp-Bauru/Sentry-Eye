@@ -90,5 +90,3 @@ class Sentry():
 
     def getX(self):
         return self.x
-
- 

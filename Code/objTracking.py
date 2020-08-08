@@ -44,5 +44,4 @@ class Object_Tracking(threading.Thread):
                     (x, y, w, h) = [int(v) for v in box]
                     self.p1 = [x, y]
                     self.p2 = [x+w, y+h]
-                    #print(self.p1, self.p2)
-                    
+                    #print(self.p1, self.p2)              

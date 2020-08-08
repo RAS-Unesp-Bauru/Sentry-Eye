@@ -40,6 +40,7 @@ class Registration:
                     if key == ord('s'):         # Take a photo by pressing the letter "s"
                         cv2.imwrite(filename=self.dir, img=frame)
                         cap.release()
+                        cv2.destroyAllWindows()
                         print("Photo saved!")
                         break
                     

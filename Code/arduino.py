@@ -25,7 +25,7 @@ def sendArduino(connection, direction, rectangle, jump_booster): # Sends the dat
     
     data_string = "%s%s" % (direction, jump)
     
-    print(data_string)
+    #print(data_string)
 
     if connection is not None:    
         connection.write(bytes(data_string, encoding='utf-8')) # Send a string to arduino.

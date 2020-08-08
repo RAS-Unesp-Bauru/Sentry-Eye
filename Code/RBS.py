@@ -87,14 +87,46 @@ def conditions(coordenatesTarget, listRectangles): # Check if the target passed 
         for rectangle in range(limit_Numbers-1): # Check in each rectangle
             if listRectangles[rectangle][0][direction] <= target[direction] and listRectangles[rectangle+1][0][direction] > target[direction]:
                 # print('r{}: {}'.format(rectangle, positions.get(direction)))
-                results.append((rectangle, positions.get(direction)))
+                results.append([rectangle, positions.get(direction)])
 
             elif listRectangles[limit_Numbers-1][0][direction] == target[direction]:
                 # print('r{}: {}'.format(limit_Numbers - 2, positions.get(direction)))
-                results.append((limit_Numbers - 2, positions.get(direction)))         
+                results.append([limit_Numbers - 2, positions.get(direction)])
+                break
+
+    if len(results)==2 and results[0][1]=='t' and results[1][1]=='b':
+        if results[0][0] == results[1][0]:
+            results.pop(1)
+            results.pop(0)
+            print("Iguais")
+
+    if len(results)==3:
+        if results[1][1] == 'b':
+            i=1
+
+        else:
+            i=2
+
+        if results[0][0] == results[i][0]:
+            results.pop(i)
+            results.pop(0)
+            print("Iguazinhos")
+
+        else:
+            while(1):
+                print(results)
+                if results[0][0] < 0:
+                    results.pop(0)
+                    break
+
+                elif results[i][0] < 0:
+                    results.pop(i)
+                    break
+
+                results[0][0]-=1
+                results[i][0]-=1
+
+            print("Tirando um")
     
-    if results != []: # All the results are inserted in a list, in case the target pass more than one direction.
-        return results   
-
-     
-
+    if results != [] and len(results) < 3: # All the results are inserted in a list, in case the target pass more than one direction.
+        return results
