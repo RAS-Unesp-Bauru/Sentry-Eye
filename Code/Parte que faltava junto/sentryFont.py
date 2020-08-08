@@ -1,3 +1,4 @@
+from os import system
 import cv2
 import time
 from threading import Thread
@@ -41,8 +42,8 @@ class Sentry():
             #print("First while  - X = ", coord)
             
             data_string = 'l%d-0\n' % (self.jump//10)
+            system("clear")
             print("Send to Arduino (x = ", coord, "): ", data_string)
-            print('\n')
 
             if self.connection is not None:    
                 self.connection.write(bytes(data_string, encoding='utf-8')) # Send a string to arduino.

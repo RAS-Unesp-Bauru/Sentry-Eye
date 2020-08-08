@@ -1,3 +1,4 @@
+from os import system
 import face_recognition
 import cv2
 import numpy as np
@@ -6,7 +7,7 @@ import RBS
 import threading
 import serial
 from imutils.video import FPS
-from sentry_font import Sentry
+from sentryFont import Sentry
 from registration import Registration
 from setSpeed import SetSpeed
 import arduino
@@ -144,7 +145,9 @@ while True:
                         rectAndDirect = RBS.conditions([top_tracker, right_tracker, bottom_tracker, left_tracker], rect_list)
 
                         if rectAndDirect is not None:
-
+                            system("clear")
+                            print("Velocidade Horizontal: ", rectAndDirect[1], end='\n')
+                            print("Velocidade Vertical: ", rectAndDirect[0], end='\n')
                             rectangle_1 = rectAndDirect[0][0]
                             direction_1 = rectAndDirect[0][1]
                             rectangle_2 = '-'
@@ -201,6 +204,9 @@ while True:
                     rectAndDirect = RBS.conditions([top, right, bottom, left], rect_list) 
 
                     if rectAndDirect is not None:
+                        system("clear")
+                        print("Velocidade Horizontal: ", rectAndDirect[1], end='\n')
+                        print("Velocidade Vertical: ", rectAndDirect[0], end='\n')
                         rectangle_1 = rectAndDirect[0][0]
                         direction_1 = rectAndDirect[0][1]
                         rectangle_2 = '-'
