@@ -145,9 +145,6 @@ while True:
                         rectAndDirect = RBS.conditions([top_tracker, right_tracker, bottom_tracker, left_tracker], rect_list)
 
                         if rectAndDirect is not None:
-                            system("clear")
-                            print("Velocidade Horizontal: ", rectAndDirect[1], end='\n')
-                            print("Velocidade Vertical: ", rectAndDirect[0], end='\n')
                             rectangle_1 = rectAndDirect[0][0]
                             direction_1 = rectAndDirect[0][1]
                             rectangle_2 = '-'
@@ -156,7 +153,17 @@ while True:
                             if len(rectAndDirect)==2:
                                 rectangle_2 = rectAndDirect[1][0]
                                 direction_2 = rectAndDirect[1][1] 
+                            
+                            system("clear")
 
+                            if rectangle_1 == 'l' or rectangle_1 == 'r':
+                                print("Velocidade Horizontal: ", rectangle_1, end='\n')
+                                print("Velocidade Vertical: ", rectangle_2, end='\n')
+
+                            if rectangle_1 == 't' or rectangle_1 == 'b':
+                                print("Velocidade Horizontal: ", rectangle_2, end='\n')
+                                print("Velocidade Vertical: ", rectangle_1, end='\n')
+                            
                             arduino.sendArduino(arduino_connection, direction_1, rectangle_1, direction_2, rectangle_2, jump_booster) 
                     
                     elif not success:
@@ -204,9 +211,6 @@ while True:
                     rectAndDirect = RBS.conditions([top, right, bottom, left], rect_list) 
 
                     if rectAndDirect is not None:
-                        system("clear")
-                        print("Velocidade Horizontal: ", rectAndDirect[1], end='\n')
-                        print("Velocidade Vertical: ", rectAndDirect[0], end='\n')
                         rectangle_1 = rectAndDirect[0][0]
                         direction_1 = rectAndDirect[0][1]
                         rectangle_2 = '-'
@@ -215,8 +219,18 @@ while True:
                         if len(rectAndDirect)==2:
                             rectangle_2 = rectAndDirect[1][0]
                             direction_2 = rectAndDirect[1][1] 
+                        
+                        system("clear")
 
-                        arduino.sendArduino(arduino_connection, direction_1, rectangle_1, direction_2, rectangle_2, jump_booster) 
+                        if rectangle_1 == 'l' or rectangle_1 == 'r':
+                            print("Velocidade Horizontal: ", rectangle_1, end='\n')
+                            print("Velocidade Vertical: ", rectangle_2, end='\n')
+
+                        if rectangle_1 == 't' or rectangle_1 == 'b':
+                            print("Velocidade Horizontal: ", rectangle_2, end='\n')
+                            print("Velocidade Vertical: ", rectangle_1, end='\n')
+                        
+                        arduino.sendArduino(arduino_connection, direction_1, rectangle_1, direction_2, rectangle_2, jump_booster)
 
                     cache = None
                     cache = [left, top, right*0.5, bottom*0.5]
