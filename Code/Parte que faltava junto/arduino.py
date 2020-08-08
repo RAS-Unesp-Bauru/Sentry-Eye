@@ -1,3 +1,4 @@
+from os import system
 import serial 
 
 def createConnection(url): # Creates connection with the serial port of arduino.
@@ -24,6 +25,12 @@ def sendArduino(connection, direction1, rectangle1, direction2, rectangle2, jump
     if rectangle1 == 2:
         jump1 = 3*jump_booster
     
+    if rectangle1 == 3:
+        if jump_booster != 3:
+            jump1 = 4*jump_booster
+        else:
+            jump1 = 3*jump_booster
+    
     if rectangle2 == 0:
         jump2 = 1*jump_booster
 
@@ -32,10 +39,26 @@ def sendArduino(connection, direction1, rectangle1, direction2, rectangle2, jump
     
     if rectangle2 == 2:
         jump2 = 3*jump_booster
-    
+
+    if rectangle2 == 3:
+        if jump_booster != 3:
+            jump1 = 4*jump_booster
+        else:
+            jump1 = 3*jump_booster
+
     data_string = "%s%s%s%s\n" % (direction1, jump1, direction2, jump2)
     
+    system("clear")
+
     print("Send to Arduino: ", data_string)
+
+    if direction1 == 'l' or direction1 == 'r':
+        print("Velocidade Horizontal: ", jump1, end='\n')
+        print("Velocidade Vertical: ", jump2, end='\n')
+
+    elif direction1 == 't' or direction1 == 'b':
+        print("Velocidade Horizontal: ", jump1, end='\n')
+        print("Velocidade Vertical: ", jump2, end='\n')
 
     if connection is not None:    
         connection.write(bytes(data_string, encoding='utf-8')) # Send a string to arduino.
