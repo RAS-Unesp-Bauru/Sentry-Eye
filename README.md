@@ -5,7 +5,7 @@
 </p>
 <img width="2240" alt="Artboard 1sentry-eye" src="https://user-images.githubusercontent.com/50799373/88680061-7ac42b80-d0c6-11ea-8571-937653f87852.png">
 
-# Mechanical-Tracking-Eye
+# Sentry-Eye
 Track a specifc person in the camera motion range by their face characteristics, if its lost, an object tracking mechanism is activated with the same coordinates as the last known face position. Built upon "**ageitgey**" *face_recognition* neural network.
 
 ## Introduction
@@ -40,6 +40,7 @@ With registration set, the program will start to run firstly the face recognitio
 If the registered target is lost, the program will run the object tracking mechanism, that will use the last known face position as a new object to be tracked, this helps compensate some situations where the face recognition underperforms. The delimiters continue to interact with the current target coordinates to generate a response. 
 
 ### Sentry iddle mode when both algorithms doesn't find the target:
+![sentry-iddle-function](https://user-images.githubusercontent.com/54998187/89342993-fea78600-d679-11ea-8594-0d2bafbf9509.gif)
 
 A countdown will start if both trackers lose the target, when that countdown reaches zero, the camera will begin to move left and right looking for the target. This movement cicle will repeat until the target is found again.
 
