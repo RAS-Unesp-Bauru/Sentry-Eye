@@ -26,10 +26,10 @@ def sendArduino(connection, direction1, rectangle1, direction2, rectangle2, jump
         jump1 = 3*jump_booster
     
     if rectangle1 == 3:
-        if jump_booster != 3:
-            jump1 = 4*jump_booster
-        else:
+        if jump_booster == 3:
             jump1 = 3*jump_booster
+        else:
+            jump1 = 4*jump_booster
     
     if rectangle2 == 0:
         jump2 = 1*jump_booster
@@ -41,16 +41,18 @@ def sendArduino(connection, direction1, rectangle1, direction2, rectangle2, jump
         jump2 = 3*jump_booster
 
     if rectangle2 == 3:
-        if jump_booster != 3:
-            jump1 = 4*jump_booster
-        else:
+        if jump_booster == 3:
             jump1 = 3*jump_booster
+        else:
+            jump1 = 4*jump_booster
 
     data_string = "%s%s%s%s\n" % (direction1, jump1, direction2, jump2)
     
     system("clear")
 
     print("Send to Arduino: ", data_string)
+
+    print("Jump booster: ", jump_booster)
 
     if direction1 == 'l' or direction1 == 'r':
         print("Velocidade Horizontal: ", jump1, end='\n')
