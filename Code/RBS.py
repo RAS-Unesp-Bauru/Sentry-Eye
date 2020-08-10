@@ -98,7 +98,6 @@ def conditions(coordenatesTarget, listRectangles): # Check if the target passed 
         if results[0][0] == results[1][0]:
             results.pop(1)
             results.pop(0)
-            print("Iguais")
 
     if len(results)==3:
         if results[1][1] == 'b':
@@ -110,7 +109,6 @@ def conditions(coordenatesTarget, listRectangles): # Check if the target passed 
         if results[0][0] == results[i][0]:
             results.pop(i)
             results.pop(0)
-            print("Iguazinhos")
 
         else:
             while(1):
@@ -125,8 +123,6 @@ def conditions(coordenatesTarget, listRectangles): # Check if the target passed 
 
                 results[0][0]-=1
                 results[i][0]-=1
-
-            print("Tirando um")
     
     if results != [] and len(results) < 3: # All the results are inserted in a list, in case the target pass more than one direction.
         return results

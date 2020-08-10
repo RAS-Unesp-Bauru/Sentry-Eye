@@ -36,7 +36,7 @@ class Registration:
                     check, frame = cap.read()
                     cv2.imshow("Capturing", frame)
                     key = cv2.waitKey(1)
-                    print("Press the S key to take the photo.")
+                    print("Press the S key to take the photo.", end='\r')
                     if key == ord('s'):         # Take a photo by pressing the letter "s"
                         cv2.imwrite(filename=self.dir, img=frame)
                         cap.release()

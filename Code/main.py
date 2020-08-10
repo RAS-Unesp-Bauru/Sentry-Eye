@@ -1,3 +1,4 @@
+from os import system
 import face_recognition
 import cv2
 import numpy as np
@@ -6,7 +7,7 @@ import RBS
 import threading
 import serial
 from imutils.video import FPS
-from sentry_font import Sentry
+from sentryFont import Sentry
 from registration import Registration
 from setSpeed import SetSpeed
 import arduino
@@ -39,7 +40,7 @@ if speed == 'f':
 
 print("You chose the {} velocity".format(speed))
 
-arduino_connection = arduino.createConnection('COM5') # Change it for your port here.
+arduino_connection = arduino.createConnection('/dev/ttyUSB0') # Change it for your port here.
 arduino.setServoInCenter(arduino_connection)
 
 person1 = Registration()
@@ -144,22 +145,24 @@ while True:
                         rectAndDirect = RBS.conditions([top_tracker, right_tracker, bottom_tracker, left_tracker], rect_list)
 
                         if rectAndDirect is not None:
-
                             rectangle_1 = rectAndDirect[0][0]
-                            # print("Rectangle: ", rectangle_1)
-
                             direction_1 = rectAndDirect[0][1]
-                            # print("Direction: ", direction_1)
+                            rectangle_2 = -1
+                            direction_2 = '-'
 
-                            arduino.sendArduino(arduino_connection, direction_1, rectangle_1, jump_booster)
-
-                            if len(rectAndDirect) == 2: 
-
+                            if len(rectAndDirect)==2:
                                 rectangle_2 = rectAndDirect[1][0]
                                 direction_2 = rectAndDirect[1][1] 
+                            
+                            arduino.sendArduino(arduino_connection, direction_1, rectangle_1, direction_2, rectangle_2, jump_booster) 
 
-                                arduino.sendArduino(arduino_connection, direction_2, rectangle_2, jump_booster) 
-                    
+
+                        else:
+                            system("clear")
+                            print("Send to arduino: -\n\n")
+                            print("Velocidade Horizontal: -", end='\n')
+                            print("Velocidade Vertical: -", end='\n')
+
                     elif not success:
                         if(sentry.getStatus()==0):
                             sentry.startTimer()
@@ -203,23 +206,24 @@ while True:
 
                     #Send
                     rectAndDirect = RBS.conditions([top, right, bottom, left], rect_list) 
-                    print(rectAndDirect)
+
                     if rectAndDirect is not None:
-
                         rectangle_1 = rectAndDirect[0][0]
-                        # print("Rectangle: ", rectangle_1)
-
                         direction_1 = rectAndDirect[0][1]
-                        # print("Direction: ", direction_1)
+                        rectangle_2 = -1
+                        direction_2 = '-'
 
-                        arduino.sendArduino(arduino_connection, direction_1, rectangle_1, jump_booster)
-
-                        if len(rectAndDirect) == 2: 
-
+                        if len(rectAndDirect)==2:
                             rectangle_2 = rectAndDirect[1][0]
-                            direction_2 = rectAndDirect[1][1] 
+                            direction_2 = rectAndDirect[1][1]               
+                        
+                        arduino.sendArduino(arduino_connection, direction_1, rectangle_1, direction_2, rectangle_2, jump_booster)
 
-                            arduino.sendArduino(arduino_connection, direction_2, rectangle_2, jump_booster)   
+                    else:
+                        system("clear")
+                        print("Send to arduino: -\n\n")
+                        print("Velocidade Horizontal: -", end='\n')
+                        print("Velocidade Vertical: -", end='\n')
 
                     cache = None
                     cache = [left, top, right*0.5, bottom*0.5]
@@ -259,3 +263,4 @@ arduino.closeConnection(arduino_connection)
 sentry.stop_sentry_mode()
 video_capture.release()
 cv2.destroyAllWindows()
+
