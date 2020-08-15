@@ -136,6 +136,19 @@ while True:
                         
                         right_tracker = left_tracker + h
                         bottom_tracker = top_tracker + h
+
+                        if bottom_tracker > frame.shape[0]:
+                            bottom_tracker = frame.shape[0]
+                        
+                        if top_tracker < 0:
+                            top_tracker = 0
+                        
+                        if right_tracker > frame.shape[1]:
+                            right_tracker = frame.shape[1]
+                        
+                        if left_tracker < 0:
+                            left_tracker = 0
+                            
                         p1 = (left_tracker, top_tracker)
                         p2 = (right_tracker, bottom_tracker)
 

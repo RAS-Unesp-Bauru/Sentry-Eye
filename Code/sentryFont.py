@@ -31,6 +31,7 @@ class Sentry():
         coord = self.x
 
         if(self.status==1):
+            system("clear")
             print("Centralized!")
             arduino.setServoInCenter(self.connection)
 
@@ -55,6 +56,7 @@ class Sentry():
             #print("Second while - X = ", coord)
 
             data_string = 'r%d-0\n' % (self.jump//10)
+            system("clear")
             print("Send to Arduino (x = ", coord, "): ", data_string)
             print('\n')
             
