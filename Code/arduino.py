@@ -25,11 +25,6 @@ def sendArduino(connection, direction1, rectangle1, direction2, rectangle2, jump
     if rectangle1 == 2:
         jump1 = 3*jump_booster
     
-    if rectangle1 == 3:
-        if jump_booster == 3:
-            jump1 = 3*jump_booster
-        else:
-            jump1 = 4*jump_booster
     
     if rectangle2 == 0:
         jump2 = 1*jump_booster
@@ -40,11 +35,7 @@ def sendArduino(connection, direction1, rectangle1, direction2, rectangle2, jump
     if rectangle2 == 2:
         jump2 = 3*jump_booster
 
-    if rectangle2 == 3:
-        if jump_booster == 3:
-            jump1 = 3*jump_booster
-        else:
-            jump1 = 4*jump_booster
+   
 
     data_string = "%s%s%s%s\n" % (direction1, jump1, direction2, jump2)
     
